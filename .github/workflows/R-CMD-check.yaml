@@ -30,6 +30,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Without an explicit MACOSX_DEPLOYMENT_TARGET, the Rust build (cc crate,
+      # e.g. psm's aarch_aapcs64.s) targets the SDK version (e.g. 26.5) while
+      # R's final link uses clang's default (e.g. 26.0). ld then warns
+      # "object file was built for newer 'macOS' version than being linked",
+      # which R CMD check reports as a WARNING and fails the check.
+      # Pinning the deployment target to the runner's OS version keeps the
+      # Rust objects and the link step consistent.
+      - name: Align macOS deployment target
+        if: runner.os == 'macOS'
+        run: echo "MACOSX_DEPLOYMENT_TARGET=$(sw_vers -productVersion)" >> "$GITHUB_ENV"
+
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
 
