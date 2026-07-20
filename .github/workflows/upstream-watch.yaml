@@ -1,0 +1,103 @@
+name: upstream-watch
+
+# Opens a tracking issue whenever the upstream Polyglot project publishes a
+# release newer than the one this package currently vendors. GitHub cannot
+# forward another repository's release event, so this polls on a schedule.
+
+on:
+  schedule:
+    # Daily at 07:00 UTC.
+    - cron: "0 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-upstream:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Compare pinned vs. latest upstream version
+        id: compare
+        run: |
+          set -euo pipefail
+
+          pinned=$(grep -E '^Config/polyglotSQL/upstream:' DESCRIPTION | sed -E 's/.*: *//' | tr -d '[:space:]')
+          echo "Pinned: $pinned"
+
+          # crates.io is authoritative for what we actually vendor.
+          crate=$(curl -sSf \
+            -H "User-Agent: polyglotSQL-r upstream-watch (github.com/StrategicProjects/polyglot-sql-r)" \
+            "https://crates.io/api/v1/crates/polyglot-sql" \
+            | python3 -c "import json,sys;print(json.load(sys.stdin)['crate']['max_stable_version'])")
+          echo "crates.io max_stable: $crate"
+
+          # Newest of the two, using version sort.
+          latest=$(printf '%s\n%s\n' "$pinned" "$crate" | sort -V | tail -1)
+          echo "Latest: $latest"
+
+          {
+            echo "pinned=$pinned"
+            echo "latest=$latest"
+          } >> "$GITHUB_OUTPUT"
+
+          if [ "$latest" != "$pinned" ]; then
+            echo "outdated=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "outdated=false" >> "$GITHUB_OUTPUT"
+            echo "Up to date."
+          fi
+
+      - name: Open tracking issue
+        if: steps.compare.outputs.outdated == 'true'
+        env:
+          PINNED: ${{ steps.compare.outputs.pinned }}
+          LATEST: ${{ steps.compare.outputs.latest }}
+        run: |
+          set -euo pipefail
+
+          title="Update vendored polyglot-sql to ${LATEST}"
+
+          # Deduplicate: skip if an open issue with this exact title already exists.
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" --state open \
+            --search "in:title Update vendored polyglot-sql to ${LATEST}" \
+            --json title --jq "[.[] | select(.title == \"${title}\")] | length")
+          if [ "${existing:-0}" -gt 0 ]; then
+            echo "Issue already open for ${LATEST}; nothing to do."
+            exit 0
+          fi
+
+          # Ensure the label exists (ignore error if it already does).
+          gh label create upstream-update --repo "$GITHUB_REPOSITORY" \
+            --color 5b6c88 --description "Vendored polyglot-sql is behind upstream" 2>/dev/null || true
+
+          body=$(cat <<EOF
+          The upstream [Polyglot](https://github.com/tobilg/polyglot) project has released **${LATEST}**, newer than the **${PINNED}** currently vendored by this package.
+
+          - crates.io: https://crates.io/crates/polyglot-sql/${LATEST}
+          - Release notes: https://github.com/tobilg/polyglot/releases/tag/v${LATEST}
+          - Changelog: https://docs.rs/polyglot-sql/${LATEST}
+
+          ## How to update
+
+          1. \`tools/update-vendor.sh ${LATEST}\` — bumps the dependency, refreshes \`Cargo.lock\`, re-vendors all crates into \`src/rust/vendor.tar.xz\` and regenerates \`inst/COPYRIGHTS\`.
+          2. Set \`Config/polyglotSQL/upstream: ${LATEST}\` in \`DESCRIPTION\`.
+          3. Re-check the minimum Rust version printed by the script and keep \`src/rust/Cargo.toml\` (\`rust-version\`) and \`DESCRIPTION\` (\`SystemRequirements\`) in sync.
+          4. Run \`devtools::test()\` — a test asserts the linked crate version matches \`DESCRIPTION\`.
+          5. Note the upgrade in \`NEWS.md\`.
+
+          _Opened automatically by the \`upstream-watch\` workflow._
+          EOF
+          )
+
+          gh issue create --repo "$GITHUB_REPOSITORY" \
+            --title "$title" \
+            --label upstream-update \
+            --body "$body"
+
+          echo "Opened tracking issue for ${LATEST}."

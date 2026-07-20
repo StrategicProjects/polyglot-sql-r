@@ -38,9 +38,10 @@ $(STATLIB):
 	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
 	@MACOS_DEPLOYMENT@@PANIC_EXPORTS@RUSTFLAGS="$(RUSTFLAGS) --print=native-static-libs" cargo build @CRAN_FLAGS@ --lib @PROFILE@ --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR) @TARGET@
 
-	export CARGO_HOME=$(CARGOTMP) && \
-	export PATH="$(PATH):$(HOME)/.cargo/bin" && \
-	@MACOS_DEPLOYMENT@cargo run @CRAN_FLAGS@ --bin document --manifest-path=./rust/Cargo.toml --target-dir $(TARGET_DIR) @TARGET@
+	# The extendr R wrappers (R/extendr-wrappers.R) are generated at development
+	# time with rextendr::document() and committed to the package, so they are
+	# NOT regenerated here (that would run a helper binary and, when the build
+	# cross-compiles, break — see the Windows CRAN cross-build).
 
 	# Always clean up CARGOTMP
 	rm -Rf $(CARGOTMP);
