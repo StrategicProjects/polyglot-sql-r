@@ -70,6 +70,39 @@ cfg <- if (is_debug) "debug" else "release"
   ""
 )
 
+# macOS deployment target ---------------------------------------------------
+#
+# The `cc` crate (used to assemble psm/stacker) falls back to the *SDK* version
+# when MACOSX_DEPLOYMENT_TARGET is unset, while the final link performed by R
+# uses clang's default (the running OS major version). The mismatch makes ld
+# emit "object file was built for newer 'macOS' version than being linked",
+# which `R CMD check` reports as a WARNING.
+#
+# We therefore pass an explicit deployment target to cargo:
+#   * if the environment already defines one (as CRAN's macOS builders do),
+#     it is respected verbatim;
+#   * otherwise we use "<major>.0" of the running system, which is exactly
+#     clang's default link target, keeping both sides consistent.
+# On other platforms the prefix is empty.
+.macos_deployment <- ""
+
+if (identical(Sys.info()[["sysname"]], "Darwin")) {
+  target <- Sys.getenv("MACOSX_DEPLOYMENT_TARGET", "")
+  if (!nzchar(target)) {
+    product <- tryCatch(
+      system("sw_vers -productVersion", intern = TRUE, ignore.stderr = TRUE),
+      error = function(e) character()
+    )
+    if (length(product) && grepl("^[0-9]+", product[[1]])) {
+      target <- paste0(sub("^([0-9]+).*$", "\\1", product[[1]]), ".0")
+    }
+  }
+  if (nzchar(target)) {
+    message("Using MACOSX_DEPLOYMENT_TARGET=", target, " for the Rust build.")
+    .macos_deployment <- paste0("MACOSX_DEPLOYMENT_TARGET=\"", target, "\" ")
+  }
+}
+
 # read in the Makevars.in file checking
 is_windows <- .Platform[["OS.type"]] == "windows"
 
@@ -102,7 +135,8 @@ new_txt <- gsub("@CRAN_FLAGS@", .cran_flags, mv_txt) |>
   gsub("@CLEAN_TARGET@", .clean_targets, x = _) |>
   gsub("@LIBDIR@", .libdir, x = _) |>
   gsub("@TARGET@", .target, x = _) |>
-  gsub("@PANIC_EXPORTS@", .panic_exports, x = _)
+  gsub("@PANIC_EXPORTS@", .panic_exports, x = _) |>
+  gsub("@MACOS_DEPLOYMENT@", .macos_deployment, x = _)
 
 message("Writing `", mv_ofp, "`.")
 con <- file(mv_ofp, open = "wb")
