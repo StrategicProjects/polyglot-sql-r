@@ -49,7 +49,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/milkway/polyglot-sql-r" aria-label="GitHub repository"><span class="fa fab fa-github"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/StrategicProjects/polyglot-sql-r" aria-label="GitHub repository"><span class="fa fab fa-github"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -73,7 +73,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Installation and troubleshooting</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/milkway/polyglot-sql-r/blob/main/vignettes/installation-and-troubleshooting.Rmd" class="external-link"><code>vignettes/installation-and-troubleshooting.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/StrategicProjects/polyglot-sql-r/blob/main/vignettes/installation-and-troubleshooting.Rmd" class="external-link"><code>vignettes/installation-and-troubleshooting.Rmd</code></a></small>
       <div class="d-none name"><code>installation-and-troubleshooting.Rmd</code></div>
     </div>
 
@@ -116,7 +116,7 @@ itself).</p>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"milkway/polyglot-sql-r"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"StrategicProjects/polyglot-sql-r"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="offline-air-gapped-builds">Offline / air-gapped builds<a class="anchor" aria-label="anchor" href="#offline-air-gapped-builds"></a>
@@ -188,7 +188,7 @@ sources are vendored. To upgrade:</p>
 <h2 id="verifying-an-installation">Verifying an installation<a class="anchor" aria-label="anchor" href="#verifying-an-installation"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/milkway/polyglot-sql-r" class="external-link">polyglotSQL</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StrategicProjects/polyglot-sql-r" class="external-link">polyglotSQL</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/polyglot_version.html">polyglot_version</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/sql_transpile.html">sql_transpile</a></span><span class="op">(</span><span class="st">"SELECT IFNULL(a, b) FROM t"</span>, from <span class="op">=</span> <span class="st">"mysql"</span>, to <span class="op">=</span> <span class="st">"postgres"</span><span class="op">)</span></span></code></pre></div>
 </div>

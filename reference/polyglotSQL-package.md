@@ -21,11 +21,12 @@ Müller (MIT), which is a Rust port of
 
 Useful links:
 
-- <https://github.com/milkway/polyglot-sql-r>
+- <https://github.com/StrategicProjects/polyglot-sql-r>
 
-- <https://milkway.github.io/polyglot-sql-r/>
+- <https://strategicprojects.github.io/polyglot-sql-r/>
 
-- Report bugs at <https://github.com/milkway/polyglot-sql-r/issues>
+- Report bugs at
+  <https://github.com/StrategicProjects/polyglot-sql-r/issues>
 
 ## Author
 

@@ -32,7 +32,7 @@ A `polyglot_ast` object: a list with elements
 Each AST node is a named list; the name of the outer element gives the
 node kind (e.g. `"select"`). The structure follows the upstream
 `polyglot-sql` JSON AST format and round-trips through
-[`sql_generate()`](https://milkway.github.io/polyglot-sql-r/reference/sql_generate.md).
+[`sql_generate()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_generate.md).
 
 ## Examples
 

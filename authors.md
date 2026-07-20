@@ -16,18 +16,18 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/milkway/polyglot-sql-r/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/StrategicProjects/polyglot-sql-r/blob/main/DESCRIPTION)
 
 Leite A, Müller T, Mao T (2026). *polyglotSQL: SQL Parsing, Analysis and
 Dialect Translation*. R package version 0.1.0,
-<https://github.com/milkway/polyglot-sql-r>.
+<https://github.com/StrategicProjects/polyglot-sql-r>.
 
     @Manual{,
       title = {polyglotSQL: SQL Parsing, Analysis and Dialect Translation},
       author = {André Leite and Tobias Müller and Toby Mao},
       year = {2026},
       note = {R package version 0.1.0},
-      url = {https://github.com/milkway/polyglot-sql-r},
+      url = {https://github.com/StrategicProjects/polyglot-sql-r},
     }
 
 ## Additional details

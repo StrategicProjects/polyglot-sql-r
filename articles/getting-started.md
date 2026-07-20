@@ -103,7 +103,7 @@ cat(sql_format("select id,sum(x) total from t where y=1 group by id"))
 
 ## Validating
 
-[`sql_validate()`](https://milkway.github.io/polyglot-sql-r/reference/sql_validate.md)
+[`sql_validate()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_validate.md)
 returns a structured result instead of throwing:
 
 ``` r
@@ -126,7 +126,7 @@ ast
 The AST is a plain nested list following the upstream JSON format, and
 can be rendered back to SQL with any dialect’s syntax rules (for full
 translation with function rewrites, use
-[`sql_transpile()`](https://milkway.github.io/polyglot-sql-r/reference/sql_transpile.md)):
+[`sql_transpile()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_transpile.md)):
 
 ``` r
 
@@ -156,9 +156,9 @@ terminates your R session.
 
 ## Where to next?
 
-- [`vignette("dialect-migration")`](https://milkway.github.io/polyglot-sql-r/articles/dialect-migration.md)
+- [`vignette("dialect-migration")`](https://strategicprojects.github.io/polyglot-sql-r/articles/dialect-migration.md)
   — migrating a query base between engines.
-- [`vignette("parsing-validation-lineage")`](https://milkway.github.io/polyglot-sql-r/articles/parsing-validation-lineage.md)
+- [`vignette("parsing-validation-lineage")`](https://strategicprojects.github.io/polyglot-sql-r/articles/parsing-validation-lineage.md)
   — ASTs, schemas, lineage and analysis.
-- [`vignette("installation-and-troubleshooting")`](https://milkway.github.io/polyglot-sql-r/articles/installation-and-troubleshooting.md)
+- [`vignette("installation-and-troubleshooting")`](https://strategicprojects.github.io/polyglot-sql-r/articles/installation-and-troubleshooting.md)
   — Rust toolchain, offline builds, common problems.

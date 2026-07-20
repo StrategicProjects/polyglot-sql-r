@@ -26,12 +26,12 @@ sql_transpile(
 - from:
 
   Source dialect name (see
-  [`sql_dialects()`](https://milkway.github.io/polyglot-sql-r/reference/sql_dialects.md)).
+  [`sql_dialects()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_dialects.md)).
 
 - to:
 
   Target dialect name (see
-  [`sql_dialects()`](https://milkway.github.io/polyglot-sql-r/reference/sql_dialects.md)).
+  [`sql_dialects()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_dialects.md)).
 
 - pretty:
 
@@ -59,9 +59,9 @@ production.
 
 ## See also
 
-[`sql_format()`](https://milkway.github.io/polyglot-sql-r/reference/sql_format.md),
-[`sql_parse()`](https://milkway.github.io/polyglot-sql-r/reference/sql_parse.md),
-[`sql_validate()`](https://milkway.github.io/polyglot-sql-r/reference/sql_validate.md)
+[`sql_format()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_format.md),
+[`sql_parse()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_parse.md),
+[`sql_validate()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_validate.md)
 
 ## Examples
 

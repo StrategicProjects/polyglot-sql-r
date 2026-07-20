@@ -88,7 +88,7 @@ supported translation — useful for a first draft that a human reviews.
 
 ## Verifying the migration structurally
 
-[`sql_diff()`](https://milkway.github.io/polyglot-sql-r/reference/sql_diff.md)
+[`sql_diff()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_diff.md)
 shows what actually changed between two statements, which is handy when
 reviewing rewrites:
 
@@ -107,7 +107,7 @@ sql_diff(
 ```
 
 And
-[`sql_validate()`](https://milkway.github.io/polyglot-sql-r/reference/sql_validate.md)
+[`sql_validate()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_validate.md)
 confirms the output parses in the target dialect:
 
 ``` r

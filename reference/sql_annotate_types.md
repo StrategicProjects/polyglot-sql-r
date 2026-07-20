@@ -24,14 +24,14 @@ sql_annotate_types(sql, dialect = "generic", schema = NULL)
 - schema:
 
   Optional schema specification (see
-  [`as_polyglot_schema()`](https://milkway.github.io/polyglot-sql-r/reference/as_polyglot_schema.md));
+  [`as_polyglot_schema()`](https://strategicprojects.github.io/polyglot-sql-r/reference/as_polyglot_schema.md));
   improves resolution of unqualified or ambiguous columns.
 
 ## Value
 
 A `polyglot_ast` object whose nodes carry an `inferred_type` field where
 a type could be determined. Pass it to
-[`sql_generate()`](https://milkway.github.io/polyglot-sql-r/reference/sql_generate.md)
+[`sql_generate()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_generate.md)
 to render, or inspect `$statements` directly.
 
 ## Examples

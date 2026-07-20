@@ -40,7 +40,7 @@ prints exactly what is missing (it never installs anything itself).
 ``` r
 
 # install.packages("remotes")
-remotes::install_github("milkway/polyglot-sql-r")
+remotes::install_github("StrategicProjects/polyglot-sql-r")
 ```
 
 ## Offline / air-gapped builds
@@ -96,7 +96,7 @@ tools/update-vendor.sh 0.6.3   # bumps polyglot-sql, re-vendors, re-packs
 
 then update `Config/polyglotSQL/upstream` in `DESCRIPTION`, run the test
 suite, and check
-[`polyglot_version()`](https://milkway.github.io/polyglot-sql-r/reference/polyglot_version.md)
+[`polyglot_version()`](https://strategicprojects.github.io/polyglot-sql-r/reference/polyglot_version.md)
 reports the new version.
 
 ## Verifying an installation

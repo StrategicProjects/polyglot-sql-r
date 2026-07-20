@@ -32,7 +32,7 @@ sql_validate(sql, dialect = "generic", ...)
     `SELECT *` mixed with explicit columns); default `FALSE`.
 
   - `schema` — a schema specification (see
-    [`as_polyglot_schema()`](https://milkway.github.io/polyglot-sql-r/reference/as_polyglot_schema.md));
+    [`as_polyglot_schema()`](https://strategicprojects.github.io/polyglot-sql-r/reference/as_polyglot_schema.md));
     enables unknown-table/column, type and reference checks.
 
   - `error` — if `TRUE`, raise a `polyglot_validation_error` instead of

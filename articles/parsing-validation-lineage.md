@@ -7,7 +7,7 @@ library(polyglotSQL)
 
 ## The AST
 
-[`sql_parse()`](https://milkway.github.io/polyglot-sql-r/reference/sql_parse.md)
+[`sql_parse()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_parse.md)
 returns the full abstract syntax tree as nested R lists, following the
 upstream JSON AST format:
 
@@ -28,13 +28,13 @@ str(ast$statements[[1]], max.level = 3, list.len = 4)
 ```
 
 The AST round-trips:
-[`sql_generate()`](https://milkway.github.io/polyglot-sql-r/reference/sql_generate.md)
+[`sql_generate()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_generate.md)
 renders it back to SQL in any dialect.
 
 ## Tokens
 
 For lower-level tooling (syntax highlighting, linters),
-[`sql_tokenize()`](https://milkway.github.io/polyglot-sql-r/reference/sql_tokenize.md)
+[`sql_tokenize()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_tokenize.md)
 exposes the token stream with exact positions:
 
 ``` r
@@ -108,7 +108,7 @@ Note the CTE itself is not listed — only physical sources are.
 
 ## Column-level lineage
 
-[`sql_lineage()`](https://milkway.github.io/polyglot-sql-r/reference/sql_lineage.md)
+[`sql_lineage()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_lineage.md)
 traces every output column through CTEs, subqueries and expressions down
 to source tables:
 
@@ -143,7 +143,7 @@ A schema improves resolution of unqualified or ambiguous columns, and
 
 ## Structural analysis
 
-[`sql_analyze()`](https://milkway.github.io/polyglot-sql-r/reference/sql_analyze.md)
+[`sql_analyze()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_analyze.md)
 condenses a query into facts — shape, projections, relations, CTEs, set
 operations:
 
@@ -165,7 +165,7 @@ vapply(a$projections, function(p) p$transformKind, character(1))
 ## OpenLineage export
 
 For data catalogs that speak [OpenLineage](https://openlineage.io/),
-[`sql_openlineage()`](https://milkway.github.io/polyglot-sql-r/reference/sql_openlineage.md)
+[`sql_openlineage()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_openlineage.md)
 emits a `columnLineage` facet with inferred input/output datasets:
 
 ``` r

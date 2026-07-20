@@ -20,7 +20,7 @@
 ">
 <meta property="og:description" content="Parse, tokenize, validate, format, analyze and translate SQL between 30+ dialects natively in R, powered by the polyglot-sql Rust crate.
 ">
-<meta property="og:image" content="https://milkway.github.io/polyglot-sql-r/og-image.png">
+<meta property="og:image" content="https://strategicprojects.github.io/polyglot-sql-r/og-image.png">
 <meta property="og:image:alt" content="polyglotSQL — SQL parsing, analysis and dialect translation for R">
 </head>
 <body>
@@ -55,7 +55,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/milkway/polyglot-sql-r" aria-label="GitHub repository"><span class="fa fab fa-github"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/StrategicProjects/polyglot-sql-r" aria-label="GitHub repository"><span class="fa fab fa-github"></span></a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
@@ -128,14 +128,14 @@
 <p>Then:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"milkway/polyglot-sql-r"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"StrategicProjects/polyglot-sql-r"</span><span class="op">)</span></span></code></pre></div>
 <p>The package builds fully offline: all Rust dependencies are vendored in the source tarball and nothing is downloaded during <code>R CMD INSTALL</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="transpile-sql-between-dialects">Transpile SQL between dialects<a class="anchor" aria-label="anchor" href="#transpile-sql-between-dialects"></a>
 </h2>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/milkway/polyglot-sql-r" class="external-link">polyglotSQL</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/StrategicProjects/polyglot-sql-r" class="external-link">polyglotSQL</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="reference/sql_transpile.html">sql_transpile</a></span><span class="op">(</span></span>
 <span>  <span class="st">"SELECT IFNULL(a, b) FROM t"</span>,</span>
@@ -234,14 +234,14 @@
 <div class="section level2">
 <h2 id="acknowledgements-and-licensing">Acknowledgements and licensing<a class="anchor" aria-label="anchor" href="#acknowledgements-and-licensing"></a>
 </h2>
-<p>polyglotSQL (MIT) statically links the <a href="https://github.com/tobilg/polyglot" class="external-link">polyglot-sql</a> crate by Tobias Müller (MIT), which derives from <a href="https://github.com/tobymao/sqlglot" class="external-link">SQLGlot</a> by Toby Mao (MIT). Licenses of all vendored Rust crates are collected in <a href="https://github.com/milkway/polyglot-sql-r/blob/main/inst/COPYRIGHTS" class="external-link"><code>inst/COPYRIGHTS</code></a>.</p>
+<p>polyglotSQL (MIT) statically links the <a href="https://github.com/tobilg/polyglot" class="external-link">polyglot-sql</a> crate by Tobias Müller (MIT), which derives from <a href="https://github.com/tobymao/sqlglot" class="external-link">SQLGlot</a> by Toby Mao (MIT). Licenses of all vendored Rust crates are collected in <a href="https://github.com/StrategicProjects/polyglot-sql-r/blob/main/inst/COPYRIGHTS" class="external-link"><code>inst/COPYRIGHTS</code></a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/milkway/polyglot-sql-r/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/milkway/polyglot-sql-r/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/StrategicProjects/polyglot-sql-r/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/StrategicProjects/polyglot-sql-r/issues" class="external-link">Report a bug</a></li>
 <li><a href="https://github.com/tobilg/polyglot" class="external-link">Upstream Polyglot project</a></li>
 <li><a href="https://docs.rs/polyglot-sql" class="external-link">polyglot-sql crate documentation (docs.rs)</a></li>
 <li><a href="https://github.com/tobymao/sqlglot" class="external-link">SQLGlot (Python original)</a></li>
@@ -283,9 +283,9 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/milkway/polyglot-sql-r/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/milkway/polyglot-sql-r/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://github.com/milkway/polyglot-sql-r/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/milkway/polyglot-sql-r/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
-<li><a href="https://app.codecov.io/gh/milkway/polyglot-sql-r" class="external-link"><img src="https://codecov.io/gh/milkway/polyglot-sql-r/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/pkgdown.yaml" class="external-link"><img src="https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/pkgdown.yaml/badge.svg" alt="pkgdown"></a></li>
+<li><a href="https://app.codecov.io/gh/StrategicProjects/polyglot-sql-r" class="external-link"><img src="https://codecov.io/gh/StrategicProjects/polyglot-sql-r/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://opensource.org/license/mit" class="external-link"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a></li>
 </ul>
 </div>

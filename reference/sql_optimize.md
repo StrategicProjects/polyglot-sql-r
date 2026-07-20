@@ -24,7 +24,7 @@ sql_optimize(sql, dialect = "generic", schema = NULL)
 - schema:
 
   Optional schema specification (see
-  [`as_polyglot_schema()`](https://milkway.github.io/polyglot-sql-r/reference/as_polyglot_schema.md));
+  [`as_polyglot_schema()`](https://strategicprojects.github.io/polyglot-sql-r/reference/as_polyglot_schema.md));
   improves resolution of unqualified or ambiguous columns.
 
 ## Value

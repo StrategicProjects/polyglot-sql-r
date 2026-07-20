@@ -1,12 +1,12 @@
 # Specify a table schema for schema-aware operations
 
 Several polyglotSQL functions
-([`sql_validate()`](https://milkway.github.io/polyglot-sql-r/reference/sql_validate.md),
-[`sql_lineage()`](https://milkway.github.io/polyglot-sql-r/reference/sql_lineage.md),
-[`sql_analyze()`](https://milkway.github.io/polyglot-sql-r/reference/sql_analyze.md),
-[`sql_optimize()`](https://milkway.github.io/polyglot-sql-r/reference/sql_optimize.md),
-[`sql_annotate_types()`](https://milkway.github.io/polyglot-sql-r/reference/sql_annotate_types.md),
-[`sql_openlineage()`](https://milkway.github.io/polyglot-sql-r/reference/sql_openlineage.md))
+([`sql_validate()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_validate.md),
+[`sql_lineage()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_lineage.md),
+[`sql_analyze()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_analyze.md),
+[`sql_optimize()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_optimize.md),
+[`sql_annotate_types()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_annotate_types.md),
+[`sql_openlineage()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_openlineage.md))
 accept an optional `schema` argument describing the tables referenced by
 the query. A schema enables column qualification, type inference, and
 existence checks.
