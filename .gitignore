@@ -15,3 +15,8 @@ src/*.dll
 polyglotSQL.Rcheck
 polyglotSQL_*.tar.gz
 src/rust/vendor-config.toml.new
+
+# Claude Code local files (assistant notes, settings, memory)
+CLAUDE.md
+CLAUDE.local.md
+.claude/

@@ -21,3 +21,5 @@
 ^cran-comments\.md$
 ^polyglotSQL\.Rcheck$
 ^polyglotSQL_.*\.tar\.gz$
+^.*\.Rproj$
+^\.Rproj\.user$
