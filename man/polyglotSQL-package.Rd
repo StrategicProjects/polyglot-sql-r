@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.svg}{options: style='float: right' alt='logo' width='120'}}
 
-Parse, tokenize, validate, format, analyze and translate SQL between more than 30 dialects ('PostgreSQL', 'MySQL', 'BigQuery', 'Snowflake', 'DuckDB', 'T-SQL', and others) using the 'polyglot-sql' Rust crate \url{https://github.com/tobilg/polyglot}, a Rust port of the 'SQLGlot' 'Python' library. All processing happens natively in process; no database connection, 'Python' runtime or external service is required. Includes column-level lineage, structural query analysis, query optimization, 'AST' diffing and 'OpenLineage' facet generation.
+Parse, tokenize, validate, format, analyze and translate SQL between more than 30 dialects ('PostgreSQL', 'MySQL', 'BigQuery', 'Snowflake', 'DuckDB', 'T-SQL', and others) using the 'polyglot-sql' Rust crate \url{https://github.com/tobilg/polyglot}, a Rust port of the 'SQLGlot' 'Python' library. All processing happens locally in the R session; no database connection, 'Python' runtime or external service is required. Includes column-level lineage, structural query analysis, query optimization, 'AST' diffing and 'OpenLineage' facet generation.
 }
 \section{Acknowledgements}{
 
@@ -28,17 +28,21 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: André Leite \email{leite@de.ufpe.br}
+\strong{Maintainer}: Andre Leite \email{leite@castlab.org} (\href{https://orcid.org/0000-0002-4718-9766}{ORCID})
 
 Authors:
 \itemize{
-  \item André Leite \email{leite@de.ufpe.br}
-  \item Tobias Müller \email{github@tobilg.com} (Author of the bundled 'polyglot-sql' Rust crate (Polyglot project)) [copyright holder]
-  \item Toby Mao (Author of SQLGlot, from which Polyglot is derived) [copyright holder]
+  \item Andre Leite \email{leite@castlab.org} (\href{https://orcid.org/0000-0002-4718-9766}{ORCID})
+  \item Marcos Wasiliew \email{marcos.wasilew@gmail.com}
+  \item Hugo Vasconcelos \email{hugo.vasconcelos@ufpe.br} (\href{https://orcid.org/0000-0001-6249-0920}{ORCID})
+  \item Carlos Amorim \email{carlos.agaf@ufpe.br} (\href{https://orcid.org/0000-0001-6315-8305}{ORCID})
+  \item Diogo Bezerra \email{diogo.bezerra@ufpe.br} (\href{https://orcid.org/0000-0002-1216-8674}{ORCID})
 }
 
 Other contributors:
 \itemize{
+  \item Tobias Müller \email{github@tobilg.com} (Author of the bundled 'polyglot-sql' Rust crate (Polyglot project)) [copyright holder]
+  \item Toby Mao (Author of SQLGlot, from which Polyglot is derived) [copyright holder]
   \item  The authors of the vendored Rust dependencies (see inst/COPYRIGHTS) [copyright holder]
 }
 
