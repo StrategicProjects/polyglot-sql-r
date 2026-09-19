@@ -9,7 +9,7 @@ stricter syntax rules, semantic lint warnings, and schema-aware checks."><meta p
 
     <a class="navbar-brand me-2" href="../index.html">polyglotSQL</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,7 +73,10 @@ stricter syntax rules, semantic lint warnings, and schema-aware checks.</p>
 <dd><p>Additional validation options:</p><ul><li><p><code>strict_syntax</code> — reject non-canonical syntax the parser would accept
 for compatibility (e.g. trailing commas before <code>FROM</code>); default <code>FALSE</code>.</p></li>
 <li><p><code>semantic</code> — report query-quality warnings (<code>W001</code>–<code>W004</code>, e.g.
-<code>SELECT *</code> mixed with explicit columns); default <code>FALSE</code>.</p></li>
+<code>SELECT *</code> mixed with explicit columns) and semantic correctness
+errors (<code>E230</code>–<code>E232</code>: ungrouped columns, misplaced aggregates and
+misplaced window functions). The errors invalidate the statement even
+when <code>strict_syntax = FALSE</code>; default <code>FALSE</code>.</p></li>
 <li><p><code>schema</code> — a schema specification (see <code><a href="as_polyglot_schema.html">as_polyglot_schema()</a></code>);
 enables unknown-table/column, type and reference checks.</p></li>
 <li><p><code>error</code> — if <code>TRUE</code>, raise a <code>polyglot_validation_error</code> instead of

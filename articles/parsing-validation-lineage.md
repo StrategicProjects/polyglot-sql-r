@@ -87,7 +87,7 @@ schema <- list(
 
 sql_validate("SELECT o_missing FROM orders", schema = schema)
 #> <polyglot_validation> invalid (generic)
-#> [E201] Unknown column 'o_missing' in table 'orders'
+#> [E201] Unknown column 'o_missing' in table 'orders' at 1:17
 ```
 
 Use `error = TRUE` to turn an invalid result into a

@@ -20,5 +20,5 @@ package was compiled against).
 ``` r
 polyglot_version()
 #>  polyglotSQL polyglot_sql 
-#>      "0.1.0"      "0.6.2" 
+#>      "0.1.1"     "0.12.0" 
 ```

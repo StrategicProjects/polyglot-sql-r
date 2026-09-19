@@ -29,7 +29,10 @@ sql_validate(sql, dialect = "generic", ...)
     default `FALSE`.
 
   - `semantic` — report query-quality warnings (`W001`–`W004`, e.g.
-    `SELECT *` mixed with explicit columns); default `FALSE`.
+    `SELECT *` mixed with explicit columns) and semantic correctness
+    errors (`E230`–`E232`: ungrouped columns, misplaced aggregates and
+    misplaced window functions). The errors invalidate the statement
+    even when `strict_syntax = FALSE`; default `FALSE`.
 
   - `schema` — a schema specification (see
     [`as_polyglot_schema()`](https://strategicprojects.github.io/polyglot-sql-r/reference/as_polyglot_schema.md));

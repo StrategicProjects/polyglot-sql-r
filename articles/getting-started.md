@@ -11,7 +11,7 @@ in-process, with no external services.
 library(polyglotSQL)
 polyglot_version()
 #>  polyglotSQL polyglot_sql 
-#>      "0.1.0"      "0.6.2"
+#>      "0.1.1"     "0.12.0"
 ```
 
 ## Your first translation

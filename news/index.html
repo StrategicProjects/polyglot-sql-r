@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">polyglotSQL</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,14 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.0" id="polyglotsql-010">polyglotSQL 0.1.0<a class="anchor" aria-label="anchor" href="#polyglotsql-010"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.1" id="polyglotsql-011">polyglotSQL 0.1.1<a class="anchor" aria-label="anchor" href="#polyglotsql-011"></a></h2>
+<ul><li>Updated the embedded <code>polyglot-sql</code> engine from 0.6.2 to 0.12.0 (upstream changelog: <a href="https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md" class="external-link uri">https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md</a>). Highlights inherited by the R API: parser-depth protection enabled by default (deeply nested SQL now raises a <code>polyglot_guard_error</code> instead of risking a stack overflow); grouping, aggregate and window placement errors in semantic validation (<code>E230</code>-<code>E232</code>); <code><a href="../reference/sql_analyze.html">sql_analyze()</a></code> now reports scoped non-projection <code>columnUses</code> and propagates nullability and cast types through CTEs and derived tables; <code>NULLS FIRST</code>/<code>NULLS LAST</code> are preserved when formatting; 128-bit and unsigned integer types; name-aligned <code>UNION BY NAME</code> handling; many dialect fixes (DuckDB, Snowflake, ClickHouse, BigQuery, T-SQL).</li>
+<li>
+<code>sql_validate(semantic = TRUE)</code> now also reports semantic correctness errors <code>E230</code>-<code>E232</code> (ungrouped columns, misplaced aggregates and window functions), which invalidate the statement; quality hints remain warnings. Default syntax-only validation is unchanged.</li>
+<li>Errors of the new upstream kinds <code>invalid_input</code> and <code>column_resolution</code> are surfaced as plain <code>polyglot_error</code> conditions.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="polyglotsql-010">polyglotSQL 0.1.0<a class="anchor" aria-label="anchor" href="#polyglotsql-010"></a></h2><p class="text-muted">CRAN release: 2026-08-04</p>
 <p>Initial release, wrapping the <code>polyglot-sql</code> Rust crate 0.6.2.</p>
 <ul><li>Core: <code><a href="../reference/polyglot_version.html">polyglot_version()</a></code>, <code><a href="../reference/sql_dialects.html">sql_dialects()</a></code> (34 dialects with aliases).</li>
 <li>Transpilation and formatting: <code><a href="../reference/sql_transpile.html">sql_transpile()</a></code>, <code><a href="../reference/sql_format.html">sql_format()</a></code>, <code><a href="../reference/sql_generate.html">sql_generate()</a></code> with complexity guards and configurable handling of unsupported constructs.</li>
@@ -53,7 +60,8 @@
 <li>Classed error conditions (<code>polyglot_error</code>, <code>polyglot_parse_error</code>, <code>polyglot_transpile_error</code>, <code>polyglot_validation_error</code>, <code>polyglot_guard_error</code>, …); Rust failures never crash the R session.</li>
 <li>Fully offline source builds via vendored crates (<code>cargo vendor</code>).</li>
 </ul></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
