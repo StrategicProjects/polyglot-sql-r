@@ -66,7 +66,10 @@ sql_tokenize <- function(sql, dialect = "generic") {
 #'   * `strict_syntax` — reject non-canonical syntax the parser would accept
 #'     for compatibility (e.g. trailing commas before `FROM`); default `FALSE`.
 #'   * `semantic` — report query-quality warnings (`W001`–`W004`, e.g.
-#'     `SELECT *` mixed with explicit columns); default `FALSE`.
+#'     `SELECT *` mixed with explicit columns) and semantic correctness
+#'     errors (`E230`–`E232`: ungrouped columns, misplaced aggregates and
+#'     misplaced window functions). The errors invalidate the statement even
+#'     when `strict_syntax = FALSE`; default `FALSE`.
 #'   * `schema` — a schema specification (see [as_polyglot_schema()]);
 #'     enables unknown-table/column, type and reference checks.
 #'   * `error` — if `TRUE`, raise a `polyglot_validation_error` instead of

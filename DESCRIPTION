@@ -1,6 +1,6 @@
 Package: polyglotSQL
 Title: SQL Parsing, Analysis and Dialect Translation
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Andre", "Leite", email = "leite@castlab.org", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-4718-9766")),
@@ -42,7 +42,7 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder:
     knitr
-Config/polyglotSQL/upstream: 0.6.2
+Config/polyglotSQL/upstream: 0.12.0
 Config/rextendr/version: 0.5.0
 Config/testthat/edition: 3
 Encoding: UTF-8

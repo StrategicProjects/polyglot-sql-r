@@ -1,6 +1,8 @@
 ## Submission
 
-This is a new submission of polyglotSQL 0.1.0.
+This is an update release, polyglotSQL 0.1.1. It upgrades the embedded
+`polyglot-sql` Rust crate from 0.6.2 to 0.12.0 (bug fixes and additional
+SQL constructs; see NEWS.md). The R API is unchanged.
 
 polyglotSQL provides an R interface to the `polyglot-sql` Rust crate for
 parsing, validating, formatting and translating SQL between more than 30
@@ -24,9 +26,9 @@ backend:
 
 ```
 * checking installed package size ... NOTE
-  installed size is 46.5Mb
+  installed size is 48.5Mb
   sub-directories of 1Mb or more:
-    libs  46.1Mb
+    libs  48.1Mb
 ```
 
 The `libs` directory contains a single shared object with the statically
@@ -60,4 +62,4 @@ Following the CRAN policy on Rust packages:
 
 ## Downstream dependencies
 
-There are currently no downstream dependencies (new submission).
+There are currently no downstream dependencies.

@@ -22,12 +22,28 @@ test_that("strict_syntax rejects trailing commas", {
 
 test_that("semantic = TRUE surfaces quality warnings without invalidating", {
   v <- sql_validate(
-    "SELECT *, category, COUNT(*) FROM products LIMIT 10",
+    "SELECT *, category FROM products LIMIT 10",
     semantic = TRUE
   )
   expect_true(v$valid)
   expect_true(any(grepl("^W", v$errors$code)))
   expect_true(all(v$errors$severity == "warning"))
+})
+
+test_that("semantic = TRUE reports grouping/aggregate errors (E230-E232)", {
+  # polyglot-sql >= 0.12: ungrouped columns next to aggregates are errors
+  v <- sql_validate("SELECT category, COUNT(*) FROM products", semantic = TRUE)
+  expect_false(v$valid)
+  expect_true("E230" %in% v$errors$code)
+  expect_true(any(v$errors$severity == "error"))
+
+  # aggregates in WHERE are misplaced
+  v2 <- sql_validate("SELECT a FROM t WHERE SUM(a) > 1", semantic = TRUE)
+  expect_false(v2$valid)
+  expect_true("E231" %in% v2$errors$code)
+
+  # default (syntax-only) validation is unchanged
+  expect_true(sql_validate("SELECT category, COUNT(*) FROM products")$valid)
 })
 
 test_that("schema-aware validation flags unknown columns", {

@@ -97,7 +97,7 @@ The upstream crate version is pinned in `src/rust/Cargo.toml` and
 `Cargo.lock`, and its sources are vendored. To upgrade:
 
 ```sh
-tools/update-vendor.sh 0.6.3   # bumps polyglot-sql, re-vendors, re-packs
+tools/update-vendor.sh 0.12.0  # bumps polyglot-sql, re-vendors, re-packs
 ```
 
 then update `Config/polyglotSQL/upstream` in `DESCRIPTION`, run the test

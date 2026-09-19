@@ -17,7 +17,10 @@ sql_validate(sql, dialect = "generic", ...)
 \item \code{strict_syntax} — reject non-canonical syntax the parser would accept
 for compatibility (e.g. trailing commas before \code{FROM}); default \code{FALSE}.
 \item \code{semantic} — report query-quality warnings (\code{W001}–\code{W004}, e.g.
-\verb{SELECT *} mixed with explicit columns); default \code{FALSE}.
+\verb{SELECT *} mixed with explicit columns) and semantic correctness
+errors (\code{E230}–\code{E232}: ungrouped columns, misplaced aggregates and
+misplaced window functions). The errors invalidate the statement even
+when \code{strict_syntax = FALSE}; default \code{FALSE}.
 \item \code{schema} — a schema specification (see \code{\link[=as_polyglot_schema]{as_polyglot_schema()}});
 enables unknown-table/column, type and reference checks.
 \item \code{error} — if \code{TRUE}, raise a \code{polyglot_validation_error} instead of

@@ -38,13 +38,23 @@ fn error_value(e: &pg::Error) -> Value {
             start,
             end,
         } => location_error("tokenize", message, *line, *column, *start, *end),
+        // Since polyglot-sql 0.11 the parser-level complexity guards
+        // (parser depth, token budget, ...) surface as `Parse` errors whose
+        // message carries an `E_GUARD_*` code; keep them classed as guards.
         pg::Error::Parse {
             message,
             line,
             column,
             start,
             end,
-        } => location_error("parse", message, *line, *column, *start, *end),
+        } => {
+            let kind = if message.starts_with("E_GUARD") {
+                "guard"
+            } else {
+                "parse"
+            };
+            location_error(kind, message, *line, *column, *start, *end)
+        }
         pg::Error::Syntax {
             message,
             line,
@@ -66,7 +76,15 @@ fn error_value(e: &pg::Error) -> Value {
             "feature": feature,
             "dialect": dialect,
         }),
+        pg::Error::InvalidInput(message) => {
+            json!({ "kind": "invalid_input", "message": message })
+        }
+        pg::Error::ColumnResolution { .. } => {
+            json!({ "kind": "column_resolution", "message": e.to_string() })
+        }
         pg::Error::Internal(message) => json!({ "kind": "internal", "message": message }),
+        // `pg::Error` is `#[non_exhaustive]`: report future variants generically.
+        _ => json!({ "kind": "internal", "message": e.to_string() }),
     }
 }
 
@@ -427,6 +445,7 @@ fn ffi_validate(
             let options = pg::ValidationOptions {
                 strict_syntax,
                 semantic,
+                complexity_guard: None,
             };
             pg::validate_with_options(sql, dt, &options)
         }
@@ -559,6 +578,7 @@ fn ffi_analyze(sql: &str, dialect: &str, schema_json: &str) -> String {
     };
 
     let options = pg::AnalyzeQueryOptions {
+        complexity_guard: None,
         dialect: dt,
         schema,
     };
