@@ -4,6 +4,25 @@ This is an update release, polyglotSQL 0.1.1. It upgrades the embedded
 `polyglot-sql` Rust crate from 0.6.2 to 0.12.0 (bug fixes and additional
 SQL constructs; see NEWS.md). The R API is unchanged.
 
+## Resubmission
+
+This resubmission of 0.1.1 addresses the "M1mac" additional issue reported
+for 0.1.0 (<https://www.stats.ox.ac.uk/pub/bdr/M1mac/polyglotSQL.out>):
+
+```
+ld: warning: object file (...) was built for newer 'macOS' version (27.0)
+than being linked (26.0)
+```
+
+The package already passed `MACOSX_DEPLOYMENT_TARGET` to cargo, but derived
+it from the running system (macOS 27) when the variable was unset, whereas
+that check machine links with `CC="clang -mmacos-version-min=26"`.
+`tools/config.R` now asks R's C compiler (`R CMD config CC` / `CFLAGS`) for
+the minimum macOS version it actually targets and passes exactly that to
+cargo, so the Rust objects and the final link always agree. I reproduced the
+warning locally with a `CC` carrying a `-mmacos-version-min` older than the
+host, and confirmed it is gone with this change.
+
 polyglotSQL provides an R interface to the `polyglot-sql` Rust crate for
 parsing, validating, formatting and translating SQL between more than 30
 dialects. All computation happens in-process; the package makes no network

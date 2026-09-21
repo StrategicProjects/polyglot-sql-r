@@ -74,20 +74,68 @@ cfg <- if (is_debug) "debug" else "release"
 #
 # The `cc` crate (used to assemble psm/stacker) falls back to the *SDK* version
 # when MACOSX_DEPLOYMENT_TARGET is unset, while the final link performed by R
-# uses clang's default (the running OS major version). The mismatch makes ld
-# emit "object file was built for newer 'macOS' version than being linked",
-# which `R CMD check` reports as a WARNING.
+# targets whatever R's C compiler targets. The mismatch makes ld emit "object
+# file was built for newer 'macOS' version than being linked", which
+# `R CMD check` reports as a WARNING.
 #
 # We therefore pass an explicit deployment target to cargo:
-#   * if the environment already defines one (as CRAN's macOS builders do),
-#     it is respected verbatim;
-#   * otherwise we use "<major>.0" of the running system, which is exactly
-#     clang's default link target, keeping both sides consistent.
+#   * we first ask R's C compiler which minimum version it targets. This
+#     covers a `-mmacos-version-min` flag baked into CC (e.g.
+#     CC="clang -mmacos-version-min=26" on a macOS 27 host), an inherited
+#     MACOSX_DEPLOYMENT_TARGET, and clang's own default;
+#   * failing that, a MACOSX_DEPLOYMENT_TARGET from the environment is
+#     respected verbatim;
+#   * otherwise we use "<major>.0" of the running system.
 # On other platforms the prefix is empty.
 .macos_deployment <- ""
 
+# Minimum macOS version targeted by R's C compiler ("" if it can't be found).
+macos_cc_target <- function() {
+  r_cmd <- file.path(R.home("bin"), "R")
+  r_config <- function(var) {
+    out <- tryCatch(
+      suppressWarnings(
+        system2(r_cmd, c("CMD", "config", var), stdout = TRUE, stderr = FALSE)
+      ),
+      error = function(e) character()
+    )
+    if (length(out) && is.null(attr(out, "status"))) out[[1]] else ""
+  }
+  cc <- r_config("CC")
+  if (!nzchar(cc)) {
+    return("")
+  }
+  src <- tempfile(fileext = ".c")
+  on.exit(unlink(src), add = TRUE)
+  writeLines("__ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__", src)
+  out <- tryCatch(
+    suppressWarnings(
+      system(
+        paste(cc, r_config("CFLAGS"), "-E -P", shQuote(src)),
+        intern = TRUE,
+        ignore.stderr = TRUE
+      )
+    ),
+    error = function(e) character()
+  )
+  # encoded as MMmmpp (e.g. 260000, 110300) or, before 10.10, as MMmp (1090)
+  code <- grep("^[0-9]{4,6}$", trimws(out), value = TRUE)
+  if (!length(code)) {
+    return("")
+  }
+  code <- as.integer(code[[1]])
+  if (code >= 100000L) {
+    paste0(code %/% 10000L, ".", (code %/% 100L) %% 100L)
+  } else {
+    paste0(code %/% 100L, ".", (code %/% 10L) %% 10L)
+  }
+}
+
 if (identical(Sys.info()[["sysname"]], "Darwin")) {
-  target <- Sys.getenv("MACOSX_DEPLOYMENT_TARGET", "")
+  target <- macos_cc_target()
+  if (!nzchar(target)) {
+    target <- Sys.getenv("MACOSX_DEPLOYMENT_TARGET", "")
+  }
   if (!nzchar(target)) {
     product <- tryCatch(
       system("sw_vers -productVersion", intern = TRUE, ignore.stderr = TRUE),

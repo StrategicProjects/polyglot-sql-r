@@ -17,6 +17,10 @@
   Default syntax-only validation is unchanged.
 * Errors of the new upstream kinds `invalid_input` and `column_resolution`
   are surfaced as plain `polyglot_error` conditions.
+* macOS: the Rust build now uses the deployment target of R's C compiler
+  (including a `-mmacos-version-min` flag set in `CC`) instead of the version
+  of the running system. This removes the `ld` warning "object file was built
+  for newer 'macOS' version than being linked" seen in the CRAN M1mac checks.
 
 # polyglotSQL 0.1.0
 
