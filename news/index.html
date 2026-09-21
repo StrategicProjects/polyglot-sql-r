@@ -49,6 +49,7 @@
 <li>
 <code>sql_validate(semantic = TRUE)</code> now also reports semantic correctness errors <code>E230</code>-<code>E232</code> (ungrouped columns, misplaced aggregates and window functions), which invalidate the statement; quality hints remain warnings. Default syntax-only validation is unchanged.</li>
 <li>Errors of the new upstream kinds <code>invalid_input</code> and <code>column_resolution</code> are surfaced as plain <code>polyglot_error</code> conditions.</li>
+<li>macOS: the Rust build now uses the deployment target of R’s C compiler (including a <code>-mmacos-version-min</code> flag set in <code>CC</code>) instead of the version of the running system. This removes the <code>ld</code> warning “object file was built for newer ‘macOS’ version than being linked” seen in the CRAN M1mac checks.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="polyglotsql-010">polyglotSQL 0.1.0<a class="anchor" aria-label="anchor" href="#polyglotsql-010"></a></h2><p class="text-muted">CRAN release: 2026-08-04</p>
