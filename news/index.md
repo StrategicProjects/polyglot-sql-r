@@ -1,6 +1,20 @@
 # Changelog
 
+## polyglotSQL 0.1.2
+
+- Lighter Rust release profile (`opt-level = "s"`, no LTO, 16 codegen
+  units) to cut the cost of building from source: about half the compile
+  time and roughly a quarter less peak memory for the largest crate.
+  This targets the CRAN macOS x86_64 builders, which stopped the
+  installation at their 30-minute limit, and the linux-arm64 check,
+  where the compiler ran out of memory. On macOS and Linux the shared
+  library now exports only its R entry point and leaves out local
+  symbols, which keeps the installed size at the level of 0.1.1. The R
+  API and results are unchanged.
+
 ## polyglotSQL 0.1.1
+
+CRAN release: 2026-09-27
 
 - Updated the embedded `polyglot-sql` engine from 0.6.2 to 0.12.0
   (upstream changelog:

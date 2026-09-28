@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">polyglotSQL</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.1" id="polyglotsql-011">polyglotSQL 0.1.1<a class="anchor" aria-label="anchor" href="#polyglotsql-011"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.2" id="polyglotsql-012">polyglotSQL 0.1.2<a class="anchor" aria-label="anchor" href="#polyglotsql-012"></a></h2>
+<ul><li>Lighter Rust release profile (<code>opt-level = "s"</code>, no LTO, 16 codegen units) to cut the cost of building from source: about half the compile time and roughly a quarter less peak memory for the largest crate. This targets the CRAN macOS x86_64 builders, which stopped the installation at their 30-minute limit, and the linux-arm64 check, where the compiler ran out of memory. On macOS and Linux the shared library now exports only its R entry point and leaves out local symbols, which keeps the installed size at the level of 0.1.1. The R API and results are unchanged.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.1" id="polyglotsql-011">polyglotSQL 0.1.1<a class="anchor" aria-label="anchor" href="#polyglotsql-011"></a></h2><p class="text-muted">CRAN release: 2026-09-27</p>
 <ul><li>Updated the embedded <code>polyglot-sql</code> engine from 0.6.2 to 0.12.0 (upstream changelog: <a href="https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md" class="external-link uri">https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md</a>). Highlights inherited by the R API: parser-depth protection enabled by default (deeply nested SQL now raises a <code>polyglot_guard_error</code> instead of risking a stack overflow); grouping, aggregate and window placement errors in semantic validation (<code>E230</code>-<code>E232</code>); <code><a href="../reference/sql_analyze.html">sql_analyze()</a></code> now reports scoped non-projection <code>columnUses</code> and propagates nullability and cast types through CTEs and derived tables; <code>NULLS FIRST</code>/<code>NULLS LAST</code> are preserved when formatting; 128-bit and unsigned integer types; name-aligned <code>UNION BY NAME</code> handling; many dialect fixes (DuckDB, Snowflake, ClickHouse, BigQuery, T-SQL).</li>
 <li>
 <code>sql_validate(semantic = TRUE)</code> now also reports semantic correctness errors <code>E230</code>-<code>E232</code> (ungrouped columns, misplaced aggregates and window functions), which invalidate the statement; quality hints remain warnings. Default syntax-only validation is unchanged.</li>
