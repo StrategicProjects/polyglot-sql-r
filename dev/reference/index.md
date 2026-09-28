@@ -1,0 +1,61 @@
+# Package index
+
+## Core
+
+Package and engine metadata.
+
+- [`polyglotSQL`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/polyglotSQL-package.md)
+  [`polyglotSQL-package`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/polyglotSQL-package.md)
+  : polyglotSQL: SQL Parsing, Analysis and Dialect Translation
+- [`polyglot_version()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/polyglot_version.md)
+  : Versions of polyglotSQL and its embedded Rust engine
+
+## Transpilation and Formatting
+
+Translate SQL between dialects and pretty-print it.
+
+- [`sql_transpile()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_transpile.md)
+  : Translate SQL between dialects
+- [`sql_format()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_format.md)
+  : Format (pretty-print) SQL
+- [`sql_generate()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_generate.md)
+  : Generate SQL from a parsed AST
+
+## Parsing and Validation
+
+ASTs, tokens and multi-level validation.
+
+- [`sql_parse()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_parse.md)
+  : Parse SQL into an abstract syntax tree
+- [`sql_tokenize()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_tokenize.md)
+  : Tokenize SQL
+- [`sql_validate()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_validate.md)
+  : Validate SQL
+
+## Analysis and Lineage
+
+Structural facts, column lineage, optimization and diffing.
+
+- [`sql_source_tables()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_source_tables.md)
+  : List source tables referenced by SQL
+- [`sql_lineage()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_lineage.md)
+  : Column-level lineage
+- [`sql_analyze()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_analyze.md)
+  : Structural query analysis
+- [`sql_optimize()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_optimize.md)
+  : Optimize SQL
+- [`sql_diff()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_diff.md)
+  : Structural diff between two SQL statements
+- [`sql_annotate_types()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_annotate_types.md)
+  : Annotate a query with inferred data types
+- [`sql_openlineage()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_openlineage.md)
+  : OpenLineage column-lineage facet
+
+## Metadata
+
+Dialect discovery and schema helpers.
+
+- [`sql_dialects()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/sql_dialects.md)
+  : List supported SQL dialects
+- [`as_polyglot_schema()`](https://strategicprojects.github.io/polyglot-sql-r/dev/reference/as_polyglot_schema.md)
+  : Specify a table schema for schema-aware operations
