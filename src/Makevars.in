@@ -47,6 +47,7 @@ $(STATLIB):
 	rm -Rf $(CARGOTMP);
 
 rust_clean: $(SHLIB)
+	@STRIP_SHLIB@
 	rm -Rf $(CARGOTMP) $(VENDOR_DIR) @CLEAN_TARGET@
 
 clean:

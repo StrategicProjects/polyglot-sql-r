@@ -157,11 +157,14 @@ if (identical(Sys.info()[["sysname"]], "Darwin")) {
 # leaves the static library with ~150k global symbols. Linked as is, they are
 # all exported from the package's shared object and their names alone add
 # ~50 MB to it. Export only the R entry point, drop unreferenced sections and
-# keep local symbols out of the output. On Linux the hidden symbols stay in the
-# symbol table (and std's debug info comes along), so the table is stripped
-# with -s. Windows already restricts exports with polyglotSQL-win.def; other
-# systems keep the default link.
+# keep local symbols out of the output. GNU ld turns the hidden symbols into
+# locals only after --discard-all has run, and std's debug info comes along, so
+# on Linux the linked object is run through `strip -x -S` instead; `strip -s`
+# would also drop the global symbols R CMD check inspects. Windows already
+# restricts exports with polyglotSQL-win.def; other systems keep the default
+# link.
 .link_flags <- ""
+.strip_shlib <- ""
 if (!is_debug && !is_wasm) {
   sysname <- Sys.info()[["sysname"]]
   if (identical(sysname, "Darwin")) {
@@ -172,8 +175,9 @@ if (!is_debug && !is_wasm) {
   } else if (identical(sysname, "Linux")) {
     .link_flags <- paste(
       "-Wl,--exclude-libs,ALL",
-      "-Wl,--gc-sections -Wl,-s"
+      "-Wl,--gc-sections"
     )
+    .strip_shlib <- "if command -v strip >/dev/null 2>&1; then strip -x -S $(SHLIB); fi"
   }
 }
 
@@ -211,7 +215,8 @@ new_txt <- gsub("@CRAN_FLAGS@", .cran_flags, mv_txt) |>
   gsub("@TARGET@", .target, x = _) |>
   gsub("@PANIC_EXPORTS@", .panic_exports, x = _) |>
   gsub("@MACOS_DEPLOYMENT@", .macos_deployment, x = _) |>
-  gsub("@LINK_FLAGS@", .link_flags, x = _)
+  gsub("@LINK_FLAGS@", .link_flags, x = _) |>
+  gsub("@STRIP_SHLIB@", .strip_shlib, x = _, fixed = TRUE)
 
 message("Writing `", mv_ofp, "`.")
 con <- file(mv_ofp, open = "wb")
