@@ -34,8 +34,13 @@ features = [
 ]
 
 [profile.release]
-lto = true
-codegen-units = 1
+# Tuned for build cost on CRAN machines: the macOS x86_64 builders stop after
+# 30 minutes and the linux-arm64 checker ran out of memory with full LTO and a
+# single codegen unit. Size-optimised code without LTO halves the build time
+# and cuts peak rustc memory by about a quarter.
+opt-level = 's'
+lto = false
+codegen-units = 16
 # Panics must unwind so that extendr can catch them at the FFI boundary and
 # convert them into R errors instead of aborting the R session.
 panic = 'unwind'

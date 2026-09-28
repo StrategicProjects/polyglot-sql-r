@@ -151,6 +151,30 @@ if (identical(Sys.info()[["sysname"]], "Darwin")) {
   }
 }
 
+# linker flags for the shared library --------------------------------------
+#
+# The Rust release profile builds without LTO (see src/rust/Cargo.toml), which
+# leaves the static library with ~150k global symbols. Linked as is, they are
+# all exported from the package's shared object and their names alone add
+# ~50 MB to it. Export only the R entry point, drop unreferenced sections and
+# keep local symbols out of the output. Windows already restricts exports with
+# polyglotSQL-win.def; other systems keep the default link.
+.link_flags <- ""
+if (!is_debug && !is_wasm) {
+  sysname <- Sys.info()[["sysname"]]
+  if (identical(sysname, "Darwin")) {
+    .link_flags <- paste(
+      "-Wl,-exported_symbol,_R_init_polyglotSQL",
+      "-Wl,-dead_strip -Wl,-x"
+    )
+  } else if (identical(sysname, "Linux")) {
+    .link_flags <- paste(
+      "-Wl,--exclude-libs,ALL",
+      "-Wl,--gc-sections -Wl,--discard-all"
+    )
+  }
+}
+
 # read in the Makevars.in file checking
 is_windows <- .Platform[["OS.type"]] == "windows"
 
@@ -184,7 +208,8 @@ new_txt <- gsub("@CRAN_FLAGS@", .cran_flags, mv_txt) |>
   gsub("@LIBDIR@", .libdir, x = _) |>
   gsub("@TARGET@", .target, x = _) |>
   gsub("@PANIC_EXPORTS@", .panic_exports, x = _) |>
-  gsub("@MACOS_DEPLOYMENT@", .macos_deployment, x = _)
+  gsub("@MACOS_DEPLOYMENT@", .macos_deployment, x = _) |>
+  gsub("@LINK_FLAGS@", .link_flags, x = _)
 
 message("Writing `", mv_ofp, "`.")
 con <- file(mv_ofp, open = "wb")
