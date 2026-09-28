@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![CRAN status](https://www.r-pkg.org/badges/version/polyglotSQL)](https://CRAN.R-project.org/package=polyglotSQL)
+[![Dev version](https://img.shields.io/github/r-package/v/StrategicProjects/polyglot-sql-r?label=dev%20version)](https://strategicprojects.github.io/polyglot-sql-r/dev/)
 [![R-CMD-check](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/pkgdown.yaml)
 [![Codecov test

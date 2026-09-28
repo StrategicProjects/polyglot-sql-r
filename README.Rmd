@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # polyglotSQL <img src="man/figures/logo.svg" align="right" height="139" alt="polyglotSQL hex logo" />
 
 <!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/polyglotSQL)](https://CRAN.R-project.org/package=polyglotSQL)
+[![Dev version](https://img.shields.io/github/r-package/v/StrategicProjects/polyglot-sql-r?label=dev%20version)](https://strategicprojects.github.io/polyglot-sql-r/dev/)
 [![R-CMD-check](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/R-CMD-check.yaml)
 [![pkgdown](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/StrategicProjects/polyglot-sql-r/actions/workflows/pkgdown.yaml)
 [![Codecov test coverage](https://codecov.io/gh/StrategicProjects/polyglot-sql-r/graph/badge.svg)](https://app.codecov.io/gh/StrategicProjects/polyglot-sql-r)
