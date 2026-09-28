@@ -157,8 +157,10 @@ if (identical(Sys.info()[["sysname"]], "Darwin")) {
 # leaves the static library with ~150k global symbols. Linked as is, they are
 # all exported from the package's shared object and their names alone add
 # ~50 MB to it. Export only the R entry point, drop unreferenced sections and
-# keep local symbols out of the output. Windows already restricts exports with
-# polyglotSQL-win.def; other systems keep the default link.
+# keep local symbols out of the output. On Linux the hidden symbols stay in the
+# symbol table (and std's debug info comes along), so the table is stripped
+# with -s. Windows already restricts exports with polyglotSQL-win.def; other
+# systems keep the default link.
 .link_flags <- ""
 if (!is_debug && !is_wasm) {
   sysname <- Sys.info()[["sysname"]]
@@ -170,7 +172,7 @@ if (!is_debug && !is_wasm) {
   } else if (identical(sysname, "Linux")) {
     .link_flags <- paste(
       "-Wl,--exclude-libs,ALL",
-      "-Wl,--gc-sections -Wl,--discard-all"
+      "-Wl,--gc-sections -Wl,-s"
     )
   }
 }
