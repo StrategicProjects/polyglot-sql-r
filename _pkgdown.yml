@@ -1,5 +1,10 @@
 url: https://strategicprojects.github.io/polyglot-sql-r/
 
+# Released versions build the site root; development versions (x.y.z.9000)
+# go to /dev/, so the root keeps documenting what is on CRAN.
+development:
+  mode: auto
+
 template:
   bootstrap: 5
   light-switch: true
