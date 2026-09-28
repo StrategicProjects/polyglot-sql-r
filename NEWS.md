@@ -1,4 +1,4 @@
-# polyglotSQL (development version)
+# polyglotSQL 0.1.2
 
 * Lighter Rust release profile (`opt-level = "s"`, no LTO, 16 codegen units)
   to cut the cost of building from source: about half the compile time and
