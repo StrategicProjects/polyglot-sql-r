@@ -2,7 +2,7 @@
 
 ## Authors
 
-- **Andre Leite**. Author, maintainer.
+- **André Leite**. Author, maintainer.
   [](https://orcid.org/0000-0002-4718-9766)
 
 - **Marcos Wasiliew**. Author. [](https://orcid.org/0009-0004-4694-3159)
@@ -38,7 +38,7 @@ Translation*. R package version 0.1.2,
 
     @Manual{,
       title = {polyglotSQL: SQL Parsing, Analysis and Dialect Translation},
-      author = {Andre Leite and Marcos Wasiliew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra and Júlia {Nascimento Barreto}},
+      author = {André Leite and Marcos Wasiliew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra and Júlia {Nascimento Barreto}},
       year = {2026},
       note = {R package version 0.1.2},
       url = {https://github.com/StrategicProjects/polyglot-sql-r},

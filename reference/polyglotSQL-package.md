@@ -30,12 +30,12 @@ Useful links:
 
 ## Author
 
-**Maintainer**: Andre Leite <leite@castlab.org>
+**Maintainer**: André Leite <leite@castlab.org>
 ([ORCID](https://orcid.org/0000-0002-4718-9766))
 
 Authors:
 
-- Andre Leite <leite@castlab.org>
+- André Leite <leite@castlab.org>
   ([ORCID](https://orcid.org/0000-0002-4718-9766))
 
 - Marcos Wasiliew <marcos.wasiliew@gmail.com>
