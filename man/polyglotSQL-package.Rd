@@ -28,11 +28,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Andre Leite \email{leite@castlab.org} (\href{https://orcid.org/0000-0002-4718-9766}{ORCID})
+\strong{Maintainer}: André Leite \email{leite@castlab.org} (\href{https://orcid.org/0000-0002-4718-9766}{ORCID})
 
 Authors:
 \itemize{
-  \item Andre Leite \email{leite@castlab.org} (\href{https://orcid.org/0000-0002-4718-9766}{ORCID})
+  \item André Leite \email{leite@castlab.org} (\href{https://orcid.org/0000-0002-4718-9766}{ORCID})
   \item Marcos Wasiliew \email{marcos.wasiliew@gmail.com} (\href{https://orcid.org/0009-0004-4694-3159}{ORCID})
   \item Hugo Vasconcelos \email{hugo.vasconcelos@ufpe.br} (\href{https://orcid.org/0000-0001-6249-0920}{ORCID})
   \item Carlos Amorim \email{carlos.agaf@ufpe.br} (\href{https://orcid.org/0000-0001-6315-8305}{ORCID})
