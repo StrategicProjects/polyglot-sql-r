@@ -1,61 +1,52 @@
 ## Submission
 
-This is an update release, polyglotSQL 0.1.1. It upgrades the embedded
-`polyglot-sql` Rust crate from 0.6.2 to 0.12.0 (bug fixes and additional
-SQL constructs; see NEWS.md). The R API is unchanged.
+polyglotSQL 0.1.2 is a patch release that fixes the check failures of 0.1.1
+caused by the cost of compiling the embedded Rust engine:
 
-## Resubmission
+* **ERROR on r-release-macos-x86_64 and r-oldrel-macos-x86_64**: the
+  installation was interrupted at the builders' 30-minute limit
+  (`make: Interrupt: 2` at ~1800 s, mid-compile of the `polyglot-sql` crate).
+* **linux-arm64 additional issue**: rustc was killed for lack of memory while
+  compiling the same crate with full LTO and a single codegen unit.
 
-This resubmission of 0.1.1 addresses the "M1mac" additional issue reported
-for 0.1.0 (<https://www.stats.ox.ac.uk/pub/bdr/M1mac/polyglotSQL.out>):
+The Rust release profile is now `opt-level = "s"`, `lto = false` and
+`codegen-units = 16`. This roughly halves the compile time and cuts the peak
+memory of the largest crate by about a quarter: a local release install went
+from about 15 minutes to 446 s wall clock (788 s CPU), and on macbuilder the
+Rust build takes 6 minutes. On macOS and Linux the shared library exports only
+its R entry point and drops local symbols, so the installed size stays at the
+level of 0.1.1. The R API and results are unchanged.
 
-```
-ld: warning: object file (...) was built for newer 'macOS' version (27.0)
-than being linked (26.0)
-```
+I have no access to an x86_64 macOS builder with the CRAN time limit, so the
+timing there can only be confirmed by the CRAN checks; the numbers above come
+from the builds listed below.
 
-The package already passed `MACOSX_DEPLOYMENT_TARGET` to cargo, but derived
-it from the running system (macOS 27) when the variable was unset, whereas
-that check machine links with `CC="clang -mmacos-version-min=26"`.
-`tools/config.R` now asks R's C compiler (`R CMD config CC` / `CFLAGS`) for
-the minimum macOS version it actually targets and passes exactly that to
-cargo, so the Rust objects and the final link always agree. I reproduced the
-warning locally with a `CC` carrying a `-mmacos-version-min` older than the
-host, and confirmed it is gone with this change.
-
-polyglotSQL provides an R interface to the `polyglot-sql` Rust crate for
-parsing, validating, formatting and translating SQL between more than 30
-dialects. All computation happens in-process; the package makes no network
-requests and requires no database, Python or Java runtime.
+The only other change is author metadata: the maintainer's name is now spelled
+with its accent ("André Leite"; same person and e-mail address), a co-author's
+surname and e-mail were corrected (Marcos Wasiliew), ORCID iDs were added and
+Júlia Nascimento Barreto joins as author.
 
 ## Test environments
 
-* local macOS 26 (arm64), R 4.6.0
-* GitHub Actions: ubuntu-latest (R release, R oldrel-1), macOS-latest
+* local: macOS 26.6 (arm64), R 4.6.0, `R CMD check --as-cran`
+* macbuilder: r-release (macOS 26.6 host, SDK 14.4, arm64) -- Status: OK,
+  install in 371 s wall clock
+* GitHub Actions: ubuntu-latest (R release, R oldrel-1), macos-latest
   (R release), windows-latest (R release)
-* win-builder (R-devel)
-* macOS builder (R-release, arm64)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 2 notes
 
-The note is the expected size note for a package with a compiled Rust
-backend:
+* `Days since last update: 3` -- this release only fixes the check failures
+  above.
+* `checking HTML version of manual ... NOTE`: skipped because the local HTML
+  Tidy is too old (local tooling, not a package issue).
 
-```
-* checking installed package size ... NOTE
-  installed size is 48.5Mb
-  sub-directories of 1Mb or more:
-    libs  48.1Mb
-```
-
-The `libs` directory contains a single shared object with the statically
-linked Rust engine. The size reflects genuine functionality: the package
-embeds complete tokenizers, parsers and code generators for 34 SQL dialects,
-which is the core purpose of the package. The release profile already uses
-link-time optimization and a single codegen unit; the remaining size is
-executable code, not debugging information or data.
+`checking installed package size` reports (INFO) 48.5Mb, of which `libs` is
+48.1Mb: a single shared object with the statically linked Rust engine, which
+embeds complete tokenizers, parsers and code generators for 34 SQL dialects.
+The size is executable code, not debugging information or data.
 
 ## Rust / compiled code notes
 
