@@ -1,3 +1,30 @@
+## Resubmission
+
+This is a resubmission of 0.1.2. The first submission (2026-09-30) passed the
+incoming pre-tests but the linux-arm64 re-check reported
+
+    checking compiled code ... NOTE
+    Note: information on .o files is not available
+    File 'polyglotSQL/libs/polyglotSQL.so': Found 'abort', possibly from 'abort' (C)
+
+and Uwe Ligges asked for that reference to be removed.
+
+The reference did not come from this package's code or from the bundled
+crates, but from the Rust standard library, which calls `abort()` as a last
+resort (a failed memory allocation, a panic raised while another panic is
+being handled, a panic reaching a frame that cannot unwind); ordinary panics
+unwind and are converted into R errors at the FFI boundary. In this
+resubmission those last-resort calls are redirected at link time to a function
+in `src/entrypoint.c` that raises an R error (GNU ld `--wrap=abort` on Linux,
+`-alias` on macOS, see `tools/config.R`). The linked shared object no longer
+contains an `abort` symbol, defined or undefined, on either platform, and a
+unit test checks this with `nm -Pg`. Verified with `tools:::check_so_symbols()`
+on the installed library on linux-arm64 (Docker, rocker/r-ver) and macOS.
+Windows is unchanged; the Windows check did not report the symbol.
+
+Everything else is as in the first submission; the "Days since last update"
+NOTE is because 0.1.2 fixes the check failures of 0.1.1 listed below.
+
 ## Submission
 
 polyglotSQL 0.1.2 is a patch release that fixes the check failures of 0.1.1

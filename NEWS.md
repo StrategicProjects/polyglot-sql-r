@@ -8,6 +8,13 @@
   memory. On macOS and Linux the shared library now exports only its R entry
   point and leaves out local symbols, which keeps the installed size at the
   level of 0.1.1. The R API and results are unchanged.
+* On Linux and macOS the shared object no longer references the C library's
+  `abort()`. The Rust standard library calls it as a last resort (a failed
+  memory allocation, a panic raised while another panic is being handled);
+  those calls are now redirected at link time to a function that raises an R
+  error instead, so compiled code can never terminate the R session. This
+  removes the `Found 'abort'` NOTE of the CRAN linux-arm64 check. Ordinary
+  Rust panics were already caught and turned into R errors.
 
 # polyglotSQL 0.1.1
 

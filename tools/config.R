@@ -163,17 +163,31 @@ if (identical(Sys.info()[["sysname"]], "Darwin")) {
 # would also drop the global symbols R CMD check inspects. Windows already
 # restricts exports with polyglotSQL-win.def; other systems keep the default
 # link.
+#
+# The Rust standard library references the C library's abort() from the
+# handlers it runs when a panic cannot be unwound (a panic while handling
+# another panic, a panic reaching a frame that cannot unwind) and when a
+# memory allocation fails. Nothing in this package or in the vendored crates
+# calls abort(); panics unwind and are turned into R errors by extendr.
+# `R CMD check` nevertheless flags the symbol when it has to scan the whole
+# shared object, so those references are redirected at link time to
+# `__wrap_abort` in src/entrypoint.c, which raises an R error instead: GNU
+# ld/lld do it with `--wrap=abort`, Apple's ld by defining `_abort` as an
+# alias of `___wrap_abort` (`-alias`). Either way the linked object has no
+# `abort` symbol left.
 .link_flags <- ""
 .strip_shlib <- ""
 if (!is_debug && !is_wasm) {
   sysname <- Sys.info()[["sysname"]]
   if (identical(sysname, "Darwin")) {
     .link_flags <- paste(
+      "-Wl,-alias,___wrap_abort,_abort",
       "-Wl,-exported_symbol,_R_init_polyglotSQL",
       "-Wl,-dead_strip -Wl,-x"
     )
   } else if (identical(sysname, "Linux")) {
     .link_flags <- paste(
+      "-Wl,--wrap=abort",
       "-Wl,--exclude-libs,ALL",
       "-Wl,--gc-sections"
     )
