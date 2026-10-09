@@ -57,6 +57,12 @@ connection is only needed to obtain the package itself.
   installed package has no runtime dependency on cargo.
 - `DEBUG=true R CMD INSTALL .` produces a debug build (faster compile,
   slower runtime).
+- On **macOS x86_64 (Intel)**, a CRAN build (the default when `NOT_CRAN`
+  is unset, which is how the CRAN binaries are made) compiles the engine
+  crate without optimization so that it fits the CRAN builders’
+  30-minute limit. The engine is then 2-4 times slower, still a few
+  milliseconds per call. `NOT_CRAN=true R CMD INSTALL .` gives the fully
+  optimized build.
 
 ## Troubleshooting
 
@@ -91,7 +97,7 @@ The upstream crate version is pinned in `src/rust/Cargo.toml` and
 `Cargo.lock`, and its sources are vendored. To upgrade:
 
 ``` sh
-tools/update-vendor.sh 0.12.0  # bumps polyglot-sql, re-vendors, re-packs
+tools/update-vendor.sh 0.13.2  # bumps polyglot-sql, re-vendors, re-packs
 ```
 
 then update `Config/polyglotSQL/upstream` in `DESCRIPTION`, run the test

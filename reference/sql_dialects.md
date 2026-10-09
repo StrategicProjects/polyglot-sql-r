@@ -36,7 +36,8 @@ sql_dialects()
 #> [16] "databricks"  "athena"      "teradata"    "doris"       "starrocks"  
 #> [21] "materialize" "risingwave"  "singlestore" "cockroachdb" "tidb"       
 #> [26] "druid"       "solr"        "tableau"     "dune"        "fabric"     
-#> [31] "drill"       "dremio"      "exasol"      "datafusion" 
+#> [31] "drill"       "dremio"      "exasol"      "datafusion"  "hana"       
+#> [36] "vertica"    
 head(sql_dialects(full = TRUE))
 #>         name  aliases                                    description
 #> 1    generic          Standard SQL with no dialect-specific behavior

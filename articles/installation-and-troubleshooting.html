@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">polyglotSQL</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -138,6 +138,13 @@ installed package has no runtime dependency on cargo.</li>
 <li>
 <code>DEBUG=true R CMD INSTALL .</code> produces a debug build
 (faster compile, slower runtime).</li>
+<li>On <strong>macOS x86_64 (Intel)</strong>, a CRAN build (the default
+when <code>NOT_CRAN</code> is unset, which is how the CRAN binaries are
+made) compiles the engine crate without optimization so that it fits the
+CRAN builders’ 30-minute limit. The engine is then 2-4 times slower,
+still a few milliseconds per call.
+<code>NOT_CRAN=true R CMD INSTALL .</code> gives the fully optimized
+build.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -178,7 +185,7 @@ update with <code>rustup update stable</code>.</p>
 <p>The upstream crate version is pinned in
 <code>src/rust/Cargo.toml</code> and <code>Cargo.lock</code>, and its
 sources are vendored. To upgrade:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">tools/update-vendor.sh</span> 0.12.0  <span class="co"># bumps polyglot-sql, re-vendors, re-packs</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">tools/update-vendor.sh</span> 0.13.2  <span class="co"># bumps polyglot-sql, re-vendors, re-packs</span></span></code></pre></div>
 <p>then update <code>Config/polyglotSQL/upstream</code> in
 <code>DESCRIPTION</code>, run the test suite, and check
 <code><a href="../reference/polyglot_version.html">polyglot_version()</a></code> reports the new version.</p>

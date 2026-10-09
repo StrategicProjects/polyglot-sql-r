@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">polyglotSQL</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,12 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1.2" id="polyglotsql-012">polyglotSQL 0.1.2<a class="anchor" aria-label="anchor" href="#polyglotsql-012"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1.3" id="polyglotsql-013">polyglotSQL 0.1.3<a class="anchor" aria-label="anchor" href="#polyglotsql-013"></a></h2>
+<ul><li>Updated the embedded <code>polyglot-sql</code> engine from 0.12.0 to 0.13.2 (upstream changelog: <a href="https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md" class="external-link uri">https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md</a>). Highlights inherited by the R API: two new dialects, <code>"hana"</code> (SAP HANA, aliases <code>"saphana"</code>/<code>"sap_hana"</code>) and <code>"vertica"</code>, bringing <code><a href="../reference/sql_dialects.html">sql_dialects()</a></code> to 36 entries; set-operation output types (<code>UNION</code>/<code>INTERSECT</code>/<code>EXCEPT</code>, including <code>BY NAME</code> and <code>CORRESPONDING</code>) are now resolved by <code><a href="../reference/sql_analyze.html">sql_analyze()</a></code> and the type annotation; Oracle output renders <code>LIMIT</code> as <code>OFFSET ... FETCH FIRST ... ROWS ONLY</code> and compound queries keep a trailing <code>FETCH FIRST</code>; branch-local row limits inside set operations are wrapped in parentheses instead of limiting the whole union; DuckDB <code>//</code> integer division and <code>ORDER BY ALL</code> translate correctly; BigQuery named parameters, decimal precision, interval arithmetic and <code>DATE(timestamp, time_zone)</code> convert to DuckDB faithfully; Snowflake <code>PIVOT</code>/<code>UNPIVOT</code> over CTEs no longer loops in lineage analysis; schema validation covers <code>VALUES</code> sources, <code>LATERAL</code> and <code>INSERT ... SELECT</code>.</li>
+<li>On macOS x86_64 (Intel), the embedded engine crate is now compiled without optimization whenever <code>NOT_CRAN</code> is unset, which is how the CRAN binaries are built (<code>configure</code>/<code>tools/config.R</code>). The CRAN builders for that platform stop an installation after 30 minutes and interrupted the 0.1.1 and 0.1.2 builds. The build is about five times faster; the engine runs 2-4 times slower there, which is still a few milliseconds per call, and the shared object is larger. <code>NOT_CRAN=true R CMD INSTALL .</code> gives the fully optimized build. Other platforms are unchanged.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.2" id="polyglotsql-012">polyglotSQL 0.1.2<a class="anchor" aria-label="anchor" href="#polyglotsql-012"></a></h2><p class="text-muted">CRAN release: 2026-10-08</p>
 <ul><li>Lighter Rust release profile (<code>opt-level = "s"</code>, no LTO, 16 codegen units) to cut the cost of building from source: about half the compile time and roughly a quarter less peak memory for the largest crate. This targets the CRAN macOS x86_64 builders, which stopped the installation at their 30-minute limit, and the linux-arm64 check, where the compiler ran out of memory. On macOS and Linux the shared library now exports only its R entry point and leaves out local symbols, which keeps the installed size at the level of 0.1.1. The R API and results are unchanged.</li>
 <li>On Linux and macOS the shared object no longer references the C library’s <code>abort()</code>. The Rust standard library calls it as a last resort (a failed memory allocation, a panic raised while another panic is being handled); those calls are now redirected at link time to a function that raises an R error instead, so compiled code can never terminate the R session. This removes the <code>Found 'abort'</code> NOTE of the CRAN linux-arm64 check. Ordinary Rust panics were already caught and turned into R errors.</li>
 </ul></div>

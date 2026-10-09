@@ -31,7 +31,7 @@
 
     <a class="navbar-brand me-2" href="index.html">polyglotSQL</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -196,7 +196,7 @@
 <span>  schema <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>t <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"INT"</span>, name <span class="op">=</span> <span class="st">"TEXT"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; &lt;polyglot_validation&gt; invalid (generic)</span></span>
-<span><span class="co">#&gt; [E201] Unknown column 'nonexistent' in table 't'</span></span></code></pre></div>
+<span><span class="co">#&gt; [E201] Unknown column 'nonexistent' in table 't' at 1:19</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="column-level-lineage">Column-level lineage<a class="anchor" aria-label="anchor" href="#column-level-lineage"></a>
@@ -221,7 +221,8 @@
 <span><span class="co">#&gt; [16] "databricks"  "athena"      "teradata"    "doris"       "starrocks"  </span></span>
 <span><span class="co">#&gt; [21] "materialize" "risingwave"  "singlestore" "cockroachdb" "tidb"       </span></span>
 <span><span class="co">#&gt; [26] "druid"       "solr"        "tableau"     "dune"        "fabric"     </span></span>
-<span><span class="co">#&gt; [31] "drill"       "dremio"      "exasol"      "datafusion"</span></span></code></pre></div>
+<span><span class="co">#&gt; [31] "drill"       "dremio"      "exasol"      "datafusion"  "hana"       </span></span>
+<span><span class="co">#&gt; [36] "vertica"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="semantic-limitations">Semantic limitations<a class="anchor" aria-label="anchor" href="#semantic-limitations"></a>

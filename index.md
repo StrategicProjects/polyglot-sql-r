@@ -119,7 +119,7 @@ sql_validate(
   schema = list(t = c(id = "INT", name = "TEXT"))
 )
 #> <polyglot_validation> invalid (generic)
-#> [E201] Unknown column 'nonexistent' in table 't'
+#> [E201] Unknown column 'nonexistent' in table 't' at 1:19
 ```
 
 ## Column-level lineage
@@ -146,7 +146,8 @@ sql_dialects()
 #> [16] "databricks"  "athena"      "teradata"    "doris"       "starrocks"  
 #> [21] "materialize" "risingwave"  "singlestore" "cockroachdb" "tidb"       
 #> [26] "druid"       "solr"        "tableau"     "dune"        "fabric"     
-#> [31] "drill"       "dremio"      "exasol"      "datafusion"
+#> [31] "drill"       "dremio"      "exasol"      "datafusion"  "hana"       
+#> [36] "vertica"
 ```
 
 ## Semantic limitations

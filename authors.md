@@ -33,14 +33,14 @@ Source:
 
 Leite A, Wasiliew M, Vasconcelos H, Amorim C, Bezerra D, Nascimento
 Barreto J (2026). *polyglotSQL: SQL Parsing, Analysis and Dialect
-Translation*. R package version 0.1.2,
+Translation*. R package version 0.1.3,
 <https://github.com/StrategicProjects/polyglot-sql-r>.
 
     @Manual{,
       title = {polyglotSQL: SQL Parsing, Analysis and Dialect Translation},
       author = {André Leite and Marcos Wasiliew and Hugo Vasconcelos and Carlos Amorim and Diogo Bezerra and Júlia {Nascimento Barreto}},
       year = {2026},
-      note = {R package version 0.1.2},
+      note = {R package version 0.1.3},
       url = {https://github.com/StrategicProjects/polyglot-sql-r},
     }
 
