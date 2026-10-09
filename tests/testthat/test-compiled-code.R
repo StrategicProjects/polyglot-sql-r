@@ -11,6 +11,13 @@ test_that("the shared object does not reference abort()", {
 
   dll <- getLoadedDLLs()[["polyglotSQL"]]
   skip_if(is.null(dll), "polyglotSQL.so is not loaded")
+  # pkgload::load_all() (devtools::test()) compiles a debug build straight in
+  # src/, and tools/config.R applies the abort() redirection only to release
+  # builds; the installed library is what R CMD check inspects.
+  skip_if(
+    basename(dirname(dll[["path"]])) == "src",
+    "debug build loaded from src/ (load_all), not an installed library"
+  )
 
   syms <- system2(nm, c("-Pg", shQuote(dll[["path"]])), stdout = TRUE)
   names <- sub(" .*$", "", syms)

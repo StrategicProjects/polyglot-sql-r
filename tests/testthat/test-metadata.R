@@ -17,10 +17,11 @@ test_that("linked crate version matches the version declared in DESCRIPTION", {
 test_that("sql_dialects() returns all canonical dialects", {
   d <- sql_dialects()
   expect_type(d, "character")
-  expect_true(length(d) >= 34)
+  expect_true(length(d) >= 36)
   expect_true(all(c(
     "generic", "postgresql", "mysql", "bigquery", "snowflake", "duckdb",
-    "sqlite", "tsql", "oracle", "clickhouse", "trino", "databricks"
+    "sqlite", "tsql", "oracle", "clickhouse", "trino", "databricks",
+    "hana", "vertica"
   ) %in% d))
   expect_false(anyDuplicated(d) > 0)
 })

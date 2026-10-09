@@ -207,6 +207,8 @@ const DIALECTS: &[(&str, &[&str], &str)] = &[
         &["arrow-datafusion", "arrow_datafusion"],
         "Apache DataFusion",
     ),
+    ("hana", &["saphana", "sap_hana"], "SAP HANA"),
+    ("vertica", &[], "Vertica (OpenText Analytics Database)"),
 ];
 
 /// List built-in dialect names, aliases and descriptions.

@@ -1,79 +1,44 @@
-## Resubmission
-
-This is a resubmission of 0.1.2. The first submission (2026-09-30) passed the
-incoming pre-tests but the linux-arm64 re-check reported
-
-    checking compiled code ... NOTE
-    Note: information on .o files is not available
-    File 'polyglotSQL/libs/polyglotSQL.so': Found 'abort', possibly from 'abort' (C)
-
-and Uwe Ligges asked for that reference to be removed.
-
-The reference did not come from this package's code or from the bundled
-crates, but from the Rust standard library, which calls `abort()` as a last
-resort (a failed memory allocation, a panic raised while another panic is
-being handled, a panic reaching a frame that cannot unwind); ordinary panics
-unwind and are converted into R errors at the FFI boundary. In this
-resubmission those last-resort calls are redirected at link time to a function
-in `src/entrypoint.c` that raises an R error (GNU ld `--wrap=abort` on Linux,
-`-alias` on macOS, see `tools/config.R`). The linked shared object no longer
-contains an `abort` symbol, defined or undefined, on either platform, and a
-unit test checks this with `nm -Pg`. Verified with `tools:::check_so_symbols()`
-on the installed library on linux-arm64 (Docker, rocker/r-ver) and macOS.
-Windows is unchanged; the Windows check did not report the symbol.
-
-Everything else is as in the first submission; the "Days since last update"
-NOTE is because 0.1.2 fixes the check failures of 0.1.1 listed below.
-
 ## Submission
 
-polyglotSQL 0.1.2 is a patch release that fixes the check failures of 0.1.1
-caused by the cost of compiling the embedded Rust engine:
+polyglotSQL 0.1.3 updates the embedded `polyglot-sql` Rust engine from 0.12.0
+to 0.13.2 (two new dialects, SAP HANA and Vertica; set-operation typing,
+Oracle/T-SQL row-limit rendering and a number of transpilation fixes, see
+NEWS.md) and addresses the remaining check failure of 0.1.2:
 
 * **ERROR on r-release-macos-x86_64 and r-oldrel-macos-x86_64**: the
-  installation was interrupted at the builders' 30-minute limit
+  installation is interrupted at the builders' 30-minute limit
   (`make: Interrupt: 2` at ~1800 s, mid-compile of the `polyglot-sql` crate).
-* **linux-arm64 additional issue**: rustc was killed for lack of memory while
-  compiling the same crate with full LTO and a single codegen unit.
-
-The Rust release profile is now `opt-level = "s"`, `lto = false` and
-`codegen-units = 16`. This roughly halves the compile time and cuts the peak
-memory of the largest crate by about a quarter: a local release install went
-from about 15 minutes to 446 s wall clock (788 s CPU), and on macbuilder the
-Rust build takes 6 minutes. On macOS and Linux the shared library exports only
-its R entry point and drops local symbols, so the installed size stays at the
-level of 0.1.1. The R API and results are unchanged.
-
-I have no access to an x86_64 macOS builder with the CRAN time limit, so the
-timing there can only be confirmed by the CRAN checks; the numbers above come
-from the builds listed below.
-
-The only other change is author metadata: the maintainer's name is now spelled
-with its accent ("André Leite"; same person and e-mail address), a co-author's
-surname and e-mail were corrected (Marcos Wasiliew), ORCID iDs were added and
-Júlia Nascimento Barreto joins as author.
+  The same build completes in 12 minutes on r-release-macos-arm64 and within
+  the limits of every other flavour. On those two flavours only (`configure`
+  detects a CRAN build on x86_64 macOS), the engine crate is now compiled
+  without optimization: locally that build takes 120 s instead of 662 s wall
+  clock with two jobs (`-j 2`), so it should fit comfortably even on the
+  slower x86_64 hosts. The engine runs 2-4 times slower there (about 1-7 ms
+  per call on the benchmark queries instead of 0.2-3 ms) and the shared
+  object is about twice as large. All other platforms get the same optimized
+  build as 0.1.2. I still have no access to an x86_64 macOS builder with the
+  CRAN time limit, so the timing there can only be confirmed by the CRAN
+  checks.
 
 ## Test environments
 
 * local: macOS 26.6 (arm64), R 4.6.0, `R CMD check --as-cran`
-* macbuilder: r-release (macOS 26.6 host, SDK 14.4, arm64) -- Status: OK,
-  install in 371 s wall clock
+* macbuilder: r-release (arm64)
 * GitHub Actions: ubuntu-latest (R release, R oldrel-1), macos-latest
   (R release), windows-latest (R release)
 
 ## R CMD check results
 
-0 errors | 0 warnings | 2 notes
+0 errors | 0 warnings | 1 note
 
-* `Days since last update: 3` -- this release only fixes the check failures
-  above.
 * `checking HTML version of manual ... NOTE`: skipped because the local HTML
   Tidy is too old (local tooling, not a package issue).
 
-`checking installed package size` reports (INFO) 48.5Mb, of which `libs` is
-48.1Mb: a single shared object with the statically linked Rust engine, which
-embeds complete tokenizers, parsers and code generators for 34 SQL dialects.
-The size is executable code, not debugging information or data.
+`checking installed package size` reports (INFO) about 56 Mb, almost all of it
+`libs`: a single shared object with the statically linked Rust engine, which
+embeds complete tokenizers, parsers and code generators for 36 SQL dialects.
+The size is executable code, not debugging information or data. On the macOS
+x86_64 builders (unoptimized engine, see above) it is about 100 Mb.
 
 ## Rust / compiled code notes
 
@@ -93,6 +58,10 @@ Following the CRAN policy on Rust packages:
   and the cargo target directory) are removed after the build, and `cleanup`
   removes the generated `src/Makevars`.
 * The source tarball contains no compiled binaries.
+* On Linux and macOS the shared object does not reference `abort()` (the
+  Rust standard library's last-resort calls are redirected at link time to a
+  function that raises an R error; see `tools/config.R`), as requested for
+  0.1.2.
 * Licenses and copyright of the bundled Rust code, including the upstream
   Polyglot project (MIT) and the SQLGlot-derived portions (MIT), are recorded
   in `inst/COPYRIGHTS`, `inst/AUTHORS` and `Authors@R`.
