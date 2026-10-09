@@ -11,7 +11,9 @@ NEWS.md) and addresses the remaining check failure of 0.1.2:
   The same build completes in 12 minutes on r-release-macos-arm64 and within
   the limits of every other flavour. On those two flavours only (`configure`
   detects a CRAN build on x86_64 macOS), the engine crate is now compiled
-  without optimization: locally that build takes 120 s instead of 662 s wall
+  without optimization (and with `debug_assertions`, which the crate uses to
+  size its stack red zone for unoptimized frames): locally that build takes
+  120 s instead of 662 s wall
   clock with two jobs (`-j 2`), so it should fit comfortably even on the
   slower x86_64 hosts. The engine runs 2-4 times slower there (about 1-7 ms
   per call on the benchmark queries instead of 0.2-3 ms) and the shared
@@ -23,7 +25,6 @@ NEWS.md) and addresses the remaining check failure of 0.1.2:
 ## Test environments
 
 * local: macOS 26.6 (arm64), R 4.6.0, `R CMD check --as-cran`
-* macbuilder: r-release (arm64)
 * GitHub Actions: ubuntu-latest (R release, R oldrel-1), macos-latest
   (R release), windows-latest (R release)
 
@@ -34,7 +35,7 @@ NEWS.md) and addresses the remaining check failure of 0.1.2:
 * `checking HTML version of manual ... NOTE`: skipped because the local HTML
   Tidy is too old (local tooling, not a package issue).
 
-`checking installed package size` reports (INFO) about 56 Mb, almost all of it
+`checking installed package size` reports (INFO) 53.9 Mb, almost all of it
 `libs`: a single shared object with the statically linked Rust engine, which
 embeds complete tokenizers, parsers and code generators for 36 SQL dialects.
 The size is executable code, not debugging information or data. On the macOS

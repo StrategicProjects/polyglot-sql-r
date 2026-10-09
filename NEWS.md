@@ -15,14 +15,14 @@
   convert to DuckDB faithfully; Snowflake `PIVOT`/`UNPIVOT` over CTEs no longer
   loops in lineage analysis; schema validation covers `VALUES` sources,
   `LATERAL` and `INSERT ... SELECT`.
-* On the CRAN macOS x86_64 builders, which stop an installation after 30
-  minutes and interrupted the 0.1.1 and 0.1.2 builds, the embedded engine
-  crate is now compiled without optimization (`configure`/`tools/config.R`,
-  CRAN builds on that platform only). The build is about five times faster;
-  the engine runs 2-4 times slower there, which is still a few milliseconds
-  per call, and the shared object is larger. Installing from source with
-  `NOT_CRAN=true` gives the fully optimized build on any platform. Other
-  platforms are unchanged.
+* On macOS x86_64 (Intel), the embedded engine crate is now compiled
+  without optimization whenever `NOT_CRAN` is unset, which is how the CRAN
+  binaries are built (`configure`/`tools/config.R`). The CRAN builders for
+  that platform stop an installation after 30 minutes and interrupted the
+  0.1.1 and 0.1.2 builds. The build is about five times faster; the engine
+  runs 2-4 times slower there, which is still a few milliseconds per call,
+  and the shared object is larger. `NOT_CRAN=true R CMD INSTALL .` gives the
+  fully optimized build. Other platforms are unchanged.
 
 # polyglotSQL 0.1.2
 
