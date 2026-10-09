@@ -1,3 +1,29 @@
+# polyglotSQL 0.1.3
+
+* Updated the embedded `polyglot-sql` engine from 0.12.0 to 0.13.2 (upstream
+  changelog: <https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md>).
+  Highlights inherited by the R API: two new dialects, `"hana"` (SAP HANA,
+  aliases `"saphana"`/`"sap_hana"`) and `"vertica"`, bringing `sql_dialects()`
+  to 36 entries; set-operation output types (`UNION`/`INTERSECT`/`EXCEPT`,
+  including `BY NAME` and `CORRESPONDING`) are now resolved by `sql_analyze()`
+  and the type annotation; Oracle output renders `LIMIT` as
+  `OFFSET ... FETCH FIRST ... ROWS ONLY` and compound queries keep a trailing
+  `FETCH FIRST`; branch-local row limits inside set operations are
+  wrapped in parentheses instead of limiting the whole union; DuckDB `//` integer
+  division and `ORDER BY ALL` translate correctly; BigQuery named parameters,
+  decimal precision, interval arithmetic and `DATE(timestamp, time_zone)`
+  convert to DuckDB faithfully; Snowflake `PIVOT`/`UNPIVOT` over CTEs no longer
+  loops in lineage analysis; schema validation covers `VALUES` sources,
+  `LATERAL` and `INSERT ... SELECT`.
+* On the CRAN macOS x86_64 builders, which stop an installation after 30
+  minutes and interrupted the 0.1.1 and 0.1.2 builds, the embedded engine
+  crate is now compiled without optimization (`configure`/`tools/config.R`,
+  CRAN builds on that platform only). The build is about five times faster;
+  the engine runs 2-4 times slower there, which is still a few milliseconds
+  per call, and the shared object is larger. Installing from source with
+  `NOT_CRAN=true` gives the fully optimized build on any platform. Other
+  platforms are unchanged.
+
 # polyglotSQL 0.1.2
 
 * Lighter Rust release profile (`opt-level = "s"`, no LTO, 16 codegen units)
