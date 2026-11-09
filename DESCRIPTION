@@ -45,7 +45,7 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder:
     knitr
-Config/polyglotSQL/upstream: 0.13.2
+Config/polyglotSQL/upstream: 0.14.1
 Config/rextendr/version: 0.5.0
 Config/testthat/edition: 3
 Encoding: UTF-8
