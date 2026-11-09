@@ -2,7 +2,7 @@
 
 ## polyglotSQL 0.1.3
 
-- Updated the embedded `polyglot-sql` engine from 0.12.0 to 0.13.2
+- Updated the embedded `polyglot-sql` engine from 0.12.0 to 0.14.1
   (upstream changelog:
   <https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md>).
   Highlights inherited by the R API: two new dialects, `"hana"` (SAP
@@ -21,7 +21,26 @@
   `DATE(timestamp, time_zone)` convert to DuckDB faithfully; Snowflake
   `PIVOT`/`UNPIVOT` over CTEs no longer loops in lineage analysis;
   schema validation covers `VALUES` sources, `LATERAL` and
-  `INSERT ... SELECT`.
+  `INSERT ... SELECT`. From 0.13.3-0.14.1: star expansion honors
+  `EXCEPT`/`EXCLUDE`, `REPLACE` and `RENAME` in qualification,
+  [`sql_analyze()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_analyze.md),
+  [`sql_lineage()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_lineage.md)
+  and
+  [`sql_openlineage()`](https://strategicprojects.github.io/polyglot-sql-r/reference/sql_openlineage.md),
+  and lineage resolves `PIVOT`/`UNPIVOT` columns and ClickHouse
+  `ARRAY JOIN` aliases; `QUALIFY` and `UNION BY NAME` emulation preserve
+  output names and ordering; `EXPLAIN` keeps its options and the
+  underlying statement; new syntax (ClickHouse pipe queries, Trino
+  query-local SQL routines, DuckDB nearest joins, Hive/Spark multiple
+  inserts, Doris `MATCH` predicates); DuckDB to BigQuery maps numbered
+  parameters (`$1` becomes `@p1`) and `DATE_TRUNC`.
+- Behavior change inherited from the engine: transpilations that cannot
+  preserve the meaning of the source query (some JSON, numeric,
+  temporal, array, locking and time-travel constructs, or `DATE_TRUNC`
+  on an operand of unknown type) now raise a `polyglot_transpile_error`
+  naming the construct, where earlier versions could return SQL that ran
+  but meant something else. An explicit cast in the source usually
+  resolves it.
 - On macOS x86_64 (Intel), the embedded engine crate is now compiled
   without optimization whenever `NOT_CRAN` is unset, which is how the
   CRAN binaries are built (`configure`/`tools/config.R`). The CRAN
