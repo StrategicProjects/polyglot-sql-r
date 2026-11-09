@@ -3,14 +3,18 @@
 polyglotSQL 0.1.3 updates the embedded `polyglot-sql` Rust engine from 0.12.0
 to 0.14.1 (two new dialects, SAP HANA and Vertica; set-operation typing,
 Oracle/T-SQL row-limit rendering, lineage and transpilation fixes, see
-NEWS.md) and addresses the remaining check failure of 0.1.2:
+NEWS.md) and adds a safeguard for the macOS x86_64 builders:
 
-* **ERROR on r-release-macos-x86_64 and r-oldrel-macos-x86_64**: the
-  installation is interrupted at the builders' 30-minute limit
-  (`make: Interrupt: 2` at ~1800 s, mid-compile of the `polyglot-sql` crate).
-  The same build completes in 12 minutes on r-release-macos-arm64 and within
-  the limits of every other flavour. On those two flavours only (`configure`
-  detects a CRAN build on x86_64 macOS), the engine crate is now compiled
+* **Install time on r-release-macos-x86_64 and r-oldrel-macos-x86_64**: the
+  first checks of 0.1.1 and 0.1.2 ended in an ERROR because the installation
+  was interrupted at the builders' 30-minute limit (`make: Interrupt: 2` at
+  ~1800 s, mid-compile of the `polyglot-sql` crate). Later re-checks of 0.1.2
+  passed, but their installation took 2100 s and 2340 s, longer than the
+  point at which the earlier runs were stopped, so whether the build finishes
+  there is a matter of luck. The same build completes in 12 minutes on r-release-macos-arm64 and
+  within the limits of every other flavour. On those two flavours only
+  (`configure` detects a CRAN build on x86_64 macOS), the engine crate is now
+  compiled
   without optimization (and with `debug_assertions`, which the crate uses to
   size its stack red zone for unoptimized frames): locally that build takes
   about 140 s instead of 11-15 minutes wall
