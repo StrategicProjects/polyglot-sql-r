@@ -1,8 +1,8 @@
 ## Submission
 
 polyglotSQL 0.1.3 updates the embedded `polyglot-sql` Rust engine from 0.12.0
-to 0.13.2 (two new dialects, SAP HANA and Vertica; set-operation typing,
-Oracle/T-SQL row-limit rendering and a number of transpilation fixes, see
+to 0.14.1 (two new dialects, SAP HANA and Vertica; set-operation typing,
+Oracle/T-SQL row-limit rendering, lineage and transpilation fixes, see
 NEWS.md) and addresses the remaining check failure of 0.1.2:
 
 * **ERROR on r-release-macos-x86_64 and r-oldrel-macos-x86_64**: the
@@ -13,7 +13,7 @@ NEWS.md) and addresses the remaining check failure of 0.1.2:
   detects a CRAN build on x86_64 macOS), the engine crate is now compiled
   without optimization (and with `debug_assertions`, which the crate uses to
   size its stack red zone for unoptimized frames): locally that build takes
-  120 s instead of 662 s wall
+  about 140 s instead of 11-15 minutes wall
   clock with two jobs (`-j 2`), so it should fit comfortably even on the
   slower x86_64 hosts. The engine runs 2-4 times slower there (about 1-7 ms
   per call on the benchmark queries instead of 0.2-3 ms) and the shared
