@@ -28,7 +28,10 @@ NEWS.md) and adds a safeguard for the macOS x86_64 builders:
 
 ## Test environments
 
-* local: macOS 26.6 (arm64), R 4.6.0, `R CMD check --as-cran`
+* local: macOS 26.7 (arm64), R 4.6.0, `R CMD check --as-cran`
+* win-builder: Windows, R-devel (2026-11-07 r90850 ucrt): Status OK
+  (install 2077 s, check 723 s)
+* R-hub: linux (R-devel), windows (R-devel), macos-arm64 (R-devel)
 * GitHub Actions: ubuntu-latest (R release, R oldrel-1), macos-latest
   (R release), windows-latest (R release)
 
@@ -39,11 +42,11 @@ NEWS.md) and adds a safeguard for the macOS x86_64 builders:
 * `checking HTML version of manual ... NOTE`: skipped because the local HTML
   Tidy is too old (local tooling, not a package issue).
 
-`checking installed package size` reports (INFO) 53.9 Mb, almost all of it
+`checking installed package size` reports (INFO) 60.9 Mb, almost all of it
 `libs`: a single shared object with the statically linked Rust engine, which
 embeds complete tokenizers, parsers and code generators for 36 SQL dialects.
 The size is executable code, not debugging information or data. On the macOS
-x86_64 builders (unoptimized engine, see above) it is about 100 Mb.
+x86_64 builders (unoptimized engine, see above) it is roughly twice that.
 
 ## Rust / compiled code notes
 
