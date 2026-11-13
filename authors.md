@@ -50,7 +50,7 @@ Translation*. R package version 0.1.3,
     ======================
 
     R package (wrapper):
-      André Leite <leite@de.ufpe.br>
+      André Leite <leite@castlab.org>
 
     Embedded Rust engine:
       polyglot-sql — the Polyglot project

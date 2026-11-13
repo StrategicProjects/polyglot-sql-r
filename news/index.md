@@ -2,6 +2,8 @@
 
 ## polyglotSQL 0.1.3
 
+CRAN release: 2026-11-10
+
 - Updated the embedded `polyglot-sql` engine from 0.12.0 to 0.14.1
   (upstream changelog:
   <https://github.com/tobilg/polyglot/blob/main/CHANGELOG.md>).
